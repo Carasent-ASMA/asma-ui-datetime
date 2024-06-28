@@ -1,0 +1,51 @@
+import { bindPopper, type PopupState } from 'material-ui-popup-state/hooks'
+import { TimePickerBody } from './components/TimePickerBody'
+import { Fade, Paper, Popper } from '@mui/material'
+import type { StyledTimePickerProps } from './types'
+import { StyledButton } from 'src/shared-components/StyledButton'
+import { EraserIcon } from 'src/shared-components/EraserIcon'
+import { CheckIcon } from 'src/shared-components/CheckIcon'
+
+export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: PopupState; handleClear: () => void }> = (
+    props,
+) => {
+    const { popupState, dataTest, value, onSelect, handleClear } = props
+
+    return (
+        <Popper {...bindPopper(popupState)} transition style={{ zIndex: '1300', position: 'absolute', top: '2px' }}>
+            {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                    <Paper style={{ paddingBottom: '1px' }}>
+                        <TimePickerBody dataTest={`${dataTest}-time-picker-body`} value={value} onSelect={onSelect} />
+                        <div
+                            style={{
+                                display: 'flex',
+                                marginTop: '12px',
+                                marginBottom: '12px',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <StyledButton
+                                variant='text'
+                                onClick={handleClear}
+                                size='small'
+                                disabled={!value}
+                                style={{ minWidth: '40px', marginLeft: '10px' }}
+                            >
+                                <EraserIcon width={24} height={24} />
+                            </StyledButton>
+                            <StyledButton
+                                variant='contained'
+                                size='small'
+                                onClick={() => popupState.close()}
+                                style={{ minWidth: '40px', marginRight: '16px' }}
+                            >
+                                <CheckIcon width={20} height={20} />
+                            </StyledButton>
+                        </div>
+                    </Paper>
+                </Fade>
+            )}
+        </Popper>
+    )
+}
