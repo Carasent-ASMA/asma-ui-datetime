@@ -1,7 +1,7 @@
 import { Select, type SelectChangeEvent, type SelectProps } from '@mui/material'
-import { CloseIcon } from 'asma-core-ui'
 import clsx from 'clsx'
 import { ExpandIcon } from './ExpandIcon'
+import { CloseIcon } from './CloseIcon'
 
 /**
  *
