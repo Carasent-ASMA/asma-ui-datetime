@@ -1,6 +1,8 @@
 import type { DatePickerProps } from '../types'
 import { getValue } from '../helpers'
-import { OutlineCalendarMonth, StyledInputField } from 'asma-core-ui'
+import { StyledInputField } from 'src/shared-components/StyledInputField'
+import { OutlineCalendarMonth } from 'src/shared-components/OutlineCalendarMonth'
+
 
 export const DatePickerInputRange: React.FC<
     DatePickerProps & { onClick: (e: React.MouseEvent<HTMLDivElement>) => void }
