@@ -33,3 +33,4 @@ storybook-static
 .yarn
 dist
 configs/env.ts
+.npmrc
