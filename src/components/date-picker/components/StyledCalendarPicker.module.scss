@@ -1,138 +1,138 @@
 .styled-calendar-day-picker {
-    font-family: Roboto;
+    @apply font-roboto m-0 #{!important};
+}
 
-    .months {
-        @apply flex flex-col gap-[14px] mt-[16px] mb-[16px];
+.months {
+    @apply flex flex-col gap-[14px] mt-[16px] mb-[16px];
 
-        @media (min-width: 640px) {
-            @apply flex-row ml-[14px] mr-[14px] mt-0 mb-0;
-        }
+    @media (min-width: 640px) {
+        @apply flex-row ml-[14px] mr-[14px] mt-0 mb-0;
+    }
+}
+
+.month {
+    @apply flex flex-col gap-[16px];
+}
+
+.caption {
+    @apply flex relative pt-[4px] justify-center items-center;
+}
+
+.caption_label {
+    @apply hidden text-[16px] leading-[24px] font-medium;
+    color: var(--colors-gray-700);
+}
+
+.nav {
+    @apply flex gap-[8px] items-center;
+}
+
+.nav_button {
+    @apply h-[28px] w-[28px] flex justify-center items-center rounded-[4px] border;
+    color: var(--colors-gray-700);
+    border-color: var(--colors-gray-500);
+}
+
+.nav_button_previous {
+    @apply absolute left-[4px];
+}
+
+.nav_button_next {
+    @apply absolute right-[4px];
+}
+
+.head_row {
+    @apply flex text-[14px] leading-[20px] cursor-pointer;
+}
+
+.head_cell {
+    @apply capitalize w-[36px] cursor-pointer;
+    color: var(--colors-gray-600);
+}
+
+.row {
+    @apply flex w-full mt-[8px];
+}
+
+.cell {
+    @apply text-[14px] leading-[20px] w-[36px] relative text-gray-800;
+
+    &.has {
+        @apply bg-gama-50;
     }
 
-    .month {
-        @apply flex flex-col gap-[16px];
+    &.first {
+        @apply rounded-tl-[6px] rounded-bl-[6px];
     }
 
-    .caption {
-        @apply flex relative pt-[4px] justify-center items-center;
+    &.last {
+        @apply rounded-tr-[6px] rounded-br-[6px];
+    }
+}
+
+.day {
+    @apply h-[40px] w-[36px] p-0 font-normal rounded-[6px];
+
+    &:hover {
+        @apply bg-gama-50 #{!important};
     }
 
-    .caption_label {
-        @apply text-[16px] leading-[24px] font-medium;
-        color: var(--colors-gray-700);
+    &.focus-visible {
+        @apply outline-white outline-[2px] z-50;
+        outline-color: var(--colors-gama-500) !important;
+    }
+}
+
+.day_today {
+    @apply text-[16px] leading-[24px] bg-gray-50 font-bold text-gama-700 #{!important};
+
+    &:hover {
+        @apply bg-gama-50 #{!important};
     }
 
-    .nav {
-        @apply flex gap-[8px] items-center;
+    &.day_selected {
+        @apply bg-gama-500 #{!important};
     }
 
-    .nav_button {
-        @apply h-[28px] w-[28px] flex justify-center items-center rounded-[4px] border;
-        color: var(--colors-gray-700);
-        border-color: var(--colors-gray-500);
+    &.day_selected.rdp-day_range_end {
+        @apply bg-gama-500 text-white #{!important};
+    }
+}
+
+.day_selected {
+    @apply bg-gama-500 text-white rounded-[6px] #{!important};
+
+    &:hover {
+        @apply bg-gama-500 text-white #{!important};
     }
 
-    .nav_button_previous {
-        @apply absolute left-[4px];
+    &.day_selected.rdp-day_range_end.day_outside {
+        @apply bg-gama-500 text-white #{!important};
     }
 
-    .nav_button_next {
-        @apply absolute right-[4px];
+    &.day_range_middle {
+        @apply bg-gama-50 text-gray-800 #{!important};
     }
+}
 
-    .head_row {
-        @apply flex text-[14px] leading-[20px] cursor-pointer;
-    }
+.day_outside {
+    @apply text-gray-400;
+}
 
-    .head_cell {
-        @apply capitalize w-[36px] cursor-pointer;
-        color: var(--colors-gray-600);
-    }
+.day_disabled {
+    @apply text-gray-400;
+}
 
-    .row {
-        @apply flex w-full mt-[8px];
-    }
+.day_hidden {
+    @apply hidden;
+}
 
-    .cell {
-        @apply text-[14px] leading-[20px] w-[36px] relative text-gray-800;
-
-        &.has {
-            @apply bg-gama-50;
-        }
-
-        &.first {
-            @apply rounded-tl-[6px] rounded-bl-[6px];
-        }
-
-        &.last {
-            @apply rounded-tr-[6px] rounded-br-[6px];
-        }
-    }
-
-    .day {
-        @apply h-[40px] w-[36px] p-0 font-normal rounded-[6px];
-
-        &:hover {
-            @apply bg-gama-50 #{!important};
-        }
-
-        &.focus-visible {
-            @apply outline-white outline-[2px] z-50;
-            outline-color: var(--colors-gama-500) !important;
-        }
-    }
-
-    .day_today {
-        @apply text-[16px] leading-[24px] bg-gray-50 font-bold text-gama-700 #{!important};
-
-        &:hover {
-            @apply bg-gama-50 #{!important};
-        }
-
-        &.day_selected {
-            @apply bg-gama-500 #{!important};
-        }
-
-        &.day_selected.rdp-day_range_end {
-            @apply bg-gama-500 text-white #{!important};
-        }
-    }
-
-    .day_selected {
-        @apply bg-gama-500 text-white rounded-[6px] #{!important};
-
-        &:hover {
-            @apply bg-gama-500 text-white #{!important};
-        }
-
-        &.day_selected.rdp-day_range_end.day_outside {
-            @apply bg-gama-500 text-white #{!important};
-        }
-
-        &.day_range_middle {
-            @apply bg-gama-50 text-gray-800 #{!important};
-        }
-    }
-
-    .day_outside {
-        @apply text-gray-400;
-    }
-
-    .day_disabled {
-        @apply text-gray-400;
-    }
-
-    .day_hidden {
+.caption_end {
+    & tfoot {
         @apply hidden;
     }
 
-    .caption_end {
-        & tfoot {
-            @apply hidden;
-        }
-
-        & :global(.rdp-custom-caption) {
-            @apply opacity-0 pointer-events-none;
-        }
+    & :global(.rdp-custom-caption) {
+        @apply opacity-0 pointer-events-none;
     }
 }

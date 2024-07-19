@@ -13,13 +13,12 @@ export function CustomCaption(
 
     return (
         <div
-            className='rdp-custom-caption'
+            className='rdp-custom-caption capitalize'
             style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                height: '30px',
-                marginLeft: '16px',
+                marginLeft: '10px',
             }}
         >
             {month && <Caption displayMonth={month} />}
