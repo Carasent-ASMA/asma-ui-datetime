@@ -48,6 +48,9 @@ export const DatePickerInputRangeCompact: React.FC<
                 InputProps={{
                     endAdornment: <OutlineCalendarMonth width={24} height={24} />,
                 }}
+                FormHelperTextProps={{
+                    sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
+                }}
             />
             <StyledInputField
                 label={labelTo}
@@ -61,6 +64,9 @@ export const DatePickerInputRangeCompact: React.FC<
                 style={{ width: '144px' }}
                 InputProps={{
                     endAdornment: <OutlineCalendarMonth width={24} height={24} />,
+                }}
+                FormHelperTextProps={{
+                    sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
                 }}
             />
         </div>

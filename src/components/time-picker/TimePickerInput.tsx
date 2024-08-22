@@ -51,9 +51,19 @@ export const TimePickerInput: React.FC<
             }}
             value={localValue}
             sx={{
+                height: 40,
                 maxWidth: width || 130,
                 width,
                 minWidth: width,
+                '& .MuiFormControl-root': {
+                    height: '40px', // Custom height for the FormControl
+                },
+                '& .MuiInputBase-root': {
+                    height: '40px', // Custom height for the input element
+                },
+                '& .MuiOutlinedInput-root': {
+                    height: '40px', // Ensure the outlined variant has the correct height
+                },
             }}
             disabled={disabled}
             className={inputClassName}

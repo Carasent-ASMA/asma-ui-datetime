@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 export type StyledTimePickerProps = {
     placeholder?: string
     disabled?: boolean
@@ -7,7 +9,7 @@ export type StyledTimePickerProps = {
     dataTest: string
     width?: number
     error?: boolean
-    helperText?: string
+    helperText?: ReactNode
     label?: string
     locale?: 'no' | 'en'
     name?: string

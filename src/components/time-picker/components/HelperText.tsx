@@ -1,18 +1,18 @@
+import type { ReactNode } from "react"
+
 export const HelperText: React.FC<{
     isValidTime: boolean
     error?: boolean
     localization: 'en' | 'no'
-    helperText?: string
-}> = ({ isValidTime, error = false, localization = 'en', helperText }) => {
-    if (isValidTime && !error) return null
-
-    let errorText = helperText
+    helperText?: ReactNode
+}> = ({ isValidTime, localization = 'en', helperText }) => {
+    let helper = helperText
 
     const enString = 'Not valid'
 
     const noString = 'Ikke gyldig'
 
-    if (!isValidTime) errorText = localization === 'en' ? enString : noString
+    if (!isValidTime) helper = localization === 'en' ? enString : noString
 
-    return <span className='absolute'>{errorText}</span>
+    return <span className='absolute'>{helper}</span>
 }

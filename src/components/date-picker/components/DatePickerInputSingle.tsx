@@ -42,6 +42,9 @@ export const DatePickerInputSingle: React.FC<
             label={props.label}
             error={error}
             helperText={helperText}
+            FormHelperTextProps={{
+                sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
+            }}
         />
     )
 }

@@ -5,6 +5,8 @@ import type { StyledTimePickerProps } from './types'
 
 import { EraserIcon } from 'src/shared-components/EraserIcon'
 import { CheckIcon } from 'src/shared-components/CheckIcon'
+import clsx from 'clsx'
+import styles from './StyledTimePicker.module.scss'
 import { StyledButton } from 'src/shared-components/button'
 
 export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: PopupState; handleClear: () => void }> = (
@@ -13,7 +15,12 @@ export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: Po
     const { popupState, dataTest, value, onSelect, handleClear } = props
 
     return (
-        <Popper {...bindPopper(popupState)} transition style={{ zIndex: '1300', position: 'absolute', top: '2px' }}>
+        <Popper
+            {...bindPopper(popupState)}
+            className={clsx('!mt-[10px] shadow-tailwind', styles['shadow-mui'])}
+            transition
+            style={{ zIndex: '1300', position: 'absolute' }}
+        >
             {({ TransitionProps }) => (
                 <Fade {...TransitionProps} timeout={350}>
                     <Paper style={{ paddingBottom: '1px' }}>

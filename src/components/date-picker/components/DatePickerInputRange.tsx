@@ -34,6 +34,9 @@ export const DatePickerInputRange: React.FC<
             onClear={() => {
                 onClear?.()
             }}
+            FormHelperTextProps={{
+                sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
+            }}
         />
     )
 }
