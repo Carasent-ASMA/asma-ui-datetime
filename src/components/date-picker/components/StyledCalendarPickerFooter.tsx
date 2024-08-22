@@ -4,9 +4,10 @@ import { isDate, isSameMonth } from 'date-fns'
 import type { Dispatch, SetStateAction } from 'react'
 import { compact, isArray, isObject } from 'lodash-es'
 import { EraserIcon } from 'src/shared-components/EraserIcon'
-import { StyledButton } from 'src/shared-components/StyledButton'
+
 import { ChevronLeftIcon } from 'src/shared-components/ChevronLeftIcon'
 import { ChevronRightIcon } from 'src/shared-components/ChevronRightIcon'
+import { StyledButton } from 'src/shared-components/button'
 
 export const StyledCalendarPickerFooter: React.FC<{
     onClose: ((event: object, reason: 'backdropClick' | 'escapeKeyDown') => void) | undefined
@@ -29,6 +30,7 @@ export const StyledCalendarPickerFooter: React.FC<{
     return (
         <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'space-between' }}>
             <StyledButton
+                dataTest=''
                 variant='text'
                 onClick={(e) => {
                     onClear ? onClear() : removeSelection(e)
@@ -44,6 +46,7 @@ export const StyledCalendarPickerFooter: React.FC<{
             </StyledButton>
             <div className='rdp-custom-caption-navigation' style={{ display: 'flex', gap: 3 }}>
                 <StyledButton
+                    dataTest=''
                     variant='outlined'
                     size='small'
                     disabled={!previousMonth}
@@ -53,6 +56,7 @@ export const StyledCalendarPickerFooter: React.FC<{
                     <ChevronLeftIcon width={20} height={20} />
                 </StyledButton>
                 <StyledButton
+                    dataTest=''
                     size='small'
                     disabled={month && isSameMonth(new Date(Date.now()), month)}
                     onClick={() => {
@@ -63,6 +67,7 @@ export const StyledCalendarPickerFooter: React.FC<{
                     {isNb ? 'I dag' : 'Today'}
                 </StyledButton>
                 <StyledButton
+                    dataTest=''
                     variant='outlined'
                     size='small'
                     disabled={!nextMonth}
@@ -73,6 +78,7 @@ export const StyledCalendarPickerFooter: React.FC<{
                 </StyledButton>
             </div>
             <StyledButton
+                dataTest=''
                 variant='contained'
                 size='small'
                 onClick={(e) => {

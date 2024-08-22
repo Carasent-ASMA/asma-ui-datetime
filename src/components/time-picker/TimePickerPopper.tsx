@@ -2,9 +2,10 @@ import { bindPopper, type PopupState } from 'material-ui-popup-state/hooks'
 import { TimePickerBody } from './components/TimePickerBody'
 import { Fade, Paper, Popper } from '@mui/material'
 import type { StyledTimePickerProps } from './types'
-import { StyledButton } from 'src/shared-components/StyledButton'
+
 import { EraserIcon } from 'src/shared-components/EraserIcon'
 import { CheckIcon } from 'src/shared-components/CheckIcon'
+import { StyledButton } from 'src/shared-components/button'
 
 export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: PopupState; handleClear: () => void }> = (
     props,
@@ -26,6 +27,7 @@ export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: Po
                             }}
                         >
                             <StyledButton
+                                dataTest=''
                                 variant='text'
                                 onClick={handleClear}
                                 size='small'
@@ -35,6 +37,7 @@ export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: Po
                                 <EraserIcon width={24} height={24} />
                             </StyledButton>
                             <StyledButton
+                                dataTest=''
                                 variant='contained'
                                 size='small'
                                 onClick={() => popupState.close()}
