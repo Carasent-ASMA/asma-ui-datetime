@@ -55,6 +55,7 @@ export const StyledCalendarPicker: React.FC<{
                     className={styles['styled-calendar-day-picker']}
                     classNames={{
                         months: styles['months'],
+                        weeknumber: styles['weeknumber'],
                         month: styles['month'],
                         caption: styles['caption'],
                         caption_label: styles['caption_label'],

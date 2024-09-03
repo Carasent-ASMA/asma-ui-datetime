@@ -127,6 +127,10 @@
     @apply hidden;
 }
 
+.weeknumber {
+    @apply flex items-end justify-center absolute top-[11.3px];
+}
+
 .caption_end {
     & tfoot {
         @apply hidden;
