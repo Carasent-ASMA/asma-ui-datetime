@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.0.22",
+    "version": "0.0.23",
     "type": "module",
     "files": [
         "dist/**/*"
@@ -33,6 +33,7 @@
         "@emotion/styled": "^11.11.0",
         "@fontsource/roboto": "^5.0.4",
         "@mui/material": "^5.13.7",
+        "@react-input/mask": "^1.2.5",
         "clsx": "^1.2.1",
         "date-fns": "^3.6.0",
         "lodash-es": "^4.17.21",

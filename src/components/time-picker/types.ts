@@ -1,3 +1,4 @@
+import type PopupState from 'material-ui-popup-state'
 import type { ReactNode } from 'react'
 
 export type StyledTimePickerProps = {
@@ -14,3 +15,5 @@ export type StyledTimePickerProps = {
     locale?: 'no' | 'en'
     name?: string
 }
+
+export type IPopupStateType = ReturnType<typeof PopupState>

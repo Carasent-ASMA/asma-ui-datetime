@@ -4,6 +4,7 @@ import { HelperText } from './components/HelperText'
 import type { ChangeEvent } from 'react'
 import { StyledInputField } from 'src/shared-components/StyledInputField'
 import { ClockOutlineIcon } from 'src/shared-components/ClockOutlineIcon'
+import { useMask } from '@react-input/mask'
 
 export const TimePickerInput: React.FC<
     StyledTimePickerProps & {
@@ -30,12 +31,19 @@ export const TimePickerInput: React.FC<
         name,
     } = props
 
+    const inputRef = useMask({
+        mask: 'xx:xx',
+        replacement: {
+            x: /[0-9]/,
+        },
+        showMask: false,
+    })
     return (
         <StyledInputField
+            inputRef={inputRef}
             name={name}
             autoComplete='off'
             type='text'
-            //
             dataTest={dataTest}
             placeholder={placeholder}
             size='small'
