@@ -46,8 +46,8 @@ export const StyledCalendarPicker: React.FC<{
                     }}
                     captionLayout='dropdown'
                     locale={locale ? locale : enGB}
-                    fromYear={2000}
-                    toYear={2050}
+                    fromYear={datePickerProps.fromYear || 1900}
+                    toYear={datePickerProps.toYear || 2100}
                     data-test={'calendar-picker'}
                     showWeekNumber
                     showOutsideDays={showOutsideDays}
