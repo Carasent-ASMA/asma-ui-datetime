@@ -54,10 +54,38 @@ export const StyledSelect: React.FC<
                 borderColor: 'var(--colors-error-500) !important',
             },
             '&.Mui-focused::after': {
-                borderColor: 'var(--colors-gama-500) !important',
+                borderColor: 'transparent',
             },
             '& .select-custom-icon': {
                 marginTop: '-3.5px !important',
+            },
+            transition: 'none',
+            '&::before': {
+                transition: 'none',
+                borderBottom: 'none',
+            },
+            '&::after': {
+                transition: 'none',
+            },
+            '&:hover::before': {
+                transition: 'none',
+                borderBottom: 'none',
+            },
+            // Remove transition from the dropdown menu
+            '.MuiPaper-root': {
+                transition: 'none !important',
+                animation: 'none !important',
+            },
+            // Remove transition from menu items
+            '.MuiMenuItem-root': {
+                transition: 'none !important',
+                animation: 'none !important',
+            },
+            '&:hover:not(.Mui-disabled, .Mui-error)::before': {
+                borderBottom: 'none',
+            },
+            '&:focus::before': {
+                borderBottom: 'none',
             },
             ...props.sx,
         }}

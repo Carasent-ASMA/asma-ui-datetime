@@ -1,9 +1,7 @@
 import { useNavigation, type Matcher } from 'react-day-picker'
-
-import { isDate, isSameMonth } from 'date-fns'
+import { isDate } from 'date-fns'
 import type { Dispatch, SetStateAction } from 'react'
 import { compact, isArray, isObject } from 'lodash-es'
-import { EraserIcon } from 'src/shared-components/EraserIcon'
 
 import { ChevronLeftIcon } from 'src/shared-components/ChevronLeftIcon'
 import { ChevronRightIcon } from 'src/shared-components/ChevronRightIcon'
@@ -17,12 +15,13 @@ export const StyledCalendarPickerFooter: React.FC<{
     onClear: (() => void) | undefined
     month: Date | undefined
     setMonth: Dispatch<SetStateAction<Date | undefined>>
-}> = ({ onClose, isNb, selected, removeSelection, setMonth, month, onClear }) => {
+}> = ({ onClose, isNb, selected, removeSelection, setMonth, onClear }) => {
     const { goToMonth, nextMonth, previousMonth } = useNavigation()
+
     const eraserDisabled = isArray(selected)
-        ? !selected.length
+        ? selected.length <= 1
         : isDate(selected)
-        ? !selected
+        ? true
         : isObject(selected)
         ? !compact(Object.values(selected)).length
         : true
@@ -34,7 +33,6 @@ export const StyledCalendarPickerFooter: React.FC<{
                 variant='text'
                 onClick={(e) => {
                     onClear ? onClear() : removeSelection(e)
-                    //
                     // to reset picker navigation
                     setMonth(new Date(Date.now()))
                 }}
@@ -42,9 +40,9 @@ export const StyledCalendarPickerFooter: React.FC<{
                 disabled={eraserDisabled}
                 style={{ minWidth: '60px' }}
             >
-                <EraserIcon width={24} height={24} />
+                {isNb ? 'Klar' : 'Clear'}
             </StyledButton>
-            <div className='rdp-custom-caption-navigation' style={{ display: 'flex', gap: 3 }}>
+            <div className='rdp-custom-caption-navigation' style={{ display: 'flex', gap: 8 }}>
                 <StyledButton
                     dataTest=''
                     variant='outlined'
@@ -58,7 +56,7 @@ export const StyledCalendarPickerFooter: React.FC<{
                 <StyledButton
                     dataTest=''
                     size='small'
-                    disabled={month && isSameMonth(new Date(Date.now()), month)}
+                    // disabled={month && isSameMonth(new Date(Date.now()), month)}
                     onClick={() => {
                         setMonth(new Date(Date.now()))
                     }}

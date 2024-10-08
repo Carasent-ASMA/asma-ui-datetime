@@ -27,6 +27,20 @@ export const StyledCalendarPickerSelectMonth: React.FC<DropdownProps> = (props) 
                     month && !isNaN(Number(id)) && goToMonth(setMonth(month, Number(id)))
                 }}
                 MenuProps={{ className: styles['styled-calendar-picker-select-period-menu'] }}
+                sx={{
+                    '&::before': {
+                        borderBottom: 'none',
+                    },
+                    '&:hover::before': {
+                        borderBottom: 'none',
+                    },
+                    '&:hover:not(.Mui-disabled, .Mui-error)::before': {
+                        borderBottom: 'none',
+                    },
+                    '&:focus::before': {
+                        borderBottom: 'none',
+                    },
+                }}
             >
                 {selectedOptions?.map((month) => (
                     <StyledSelectItem key={month.id} value={month.label}>
