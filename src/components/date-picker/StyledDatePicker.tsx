@@ -33,7 +33,13 @@ export const StyledDatePicker = (props: DatePickerProps) => {
                 />
             )}
             {isMobile && (
-                <Drawer anchor={'bottom'} open={!!anchorEl} onClose={onClose}>
+                <Drawer
+                    anchor={'bottom'}
+                    open={!!anchorEl}
+                    onClose={onClose}
+                    sx={{ zIndex: 1300 }}
+                    className='z-[1300]'
+                >
                     <div className='max-w-[360px] mx-auto'>
                         <StyledDayPicker
                             datePickerProps={{ ...props }}

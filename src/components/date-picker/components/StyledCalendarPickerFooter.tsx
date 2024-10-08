@@ -19,9 +19,9 @@ export const StyledCalendarPickerFooter: React.FC<{
     const { goToMonth, nextMonth, previousMonth } = useNavigation()
 
     const eraserDisabled = isArray(selected)
-        ? selected.length <= 1
+        ? !selected.length
         : isDate(selected)
-        ? true
+        ? !selected
         : isObject(selected)
         ? !compact(Object.values(selected)).length
         : true
