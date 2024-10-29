@@ -6,12 +6,10 @@ type CommonDatePickerProps = {
     dateFormat?: string
     className?: string
     inputClassName?: string
-    onClear?: () => void
-    allowClear?: boolean
     disabledDays?: Matcher | Matcher[]
     dataTest: string
-    helperText?: React.ReactNode
-    error?: boolean
+    hideCalendar?: boolean
+    onClear?: () => void
 } & CalendarProps
 
 type DefaultSingleProps = {
@@ -25,24 +23,14 @@ type DefaultSingleProps = {
     label?: string
     labelFrom?: never
     labelTo?: never
-}
-
-type DefaultRangeProps = {
-    mode: 'range'
-    compact?: never
-    //
-    placeholder?: string
-    placeholderFrom?: never
-    placeholderTo?: never
-    //
-    label?: string
-    labelFrom?: never
-    labelTo?: never
+    helperText?: React.ReactNode
+    error?: boolean
+    allowClear?: boolean
+    onInputChange?: (date: Date | undefined) => void
 }
 
 type CompactRangeProps = {
     mode: 'range'
-    compact: true
     //
     placeholder?: never
     placeholderFrom?: string
@@ -51,6 +39,15 @@ type CompactRangeProps = {
     label?: never
     labelFrom?: string
     labelTo?: string
+    helperTextFrom?: React.ReactNode
+    helperTextTo?: React.ReactNode
+    errorFrom?: boolean
+    errorTo?: boolean
+    onInputChange?: ({ from, to }: { from: Date | undefined; to: Date | undefined }) => void
 }
 
-export type DatePickerProps = CommonDatePickerProps & (CompactRangeProps | DefaultRangeProps | DefaultSingleProps)
+export type DatePickerProps = CommonDatePickerProps & (CompactRangeProps | DefaultSingleProps)
+
+export type IDatePickerRange = CommonDatePickerProps & CompactRangeProps
+
+export type IDatePickerSingle = CommonDatePickerProps & DefaultSingleProps

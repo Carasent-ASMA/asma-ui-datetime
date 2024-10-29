@@ -1,10 +1,5 @@
 import React from 'react'
 import type { Meta } from '@storybook/react'
-import { RangePickerCompactExample } from './components/RangePickerCompactExample'
-import { SinglePickerExample } from './components/SinglePickerExample'
-import { NestedRangePickerExample } from './components/NestedRangePickerExample.1'
-import { DatePickerContainer } from './components/DatePickerContainer'
-import { RangePickerExample } from './components/RangePickerExample'
 import { StyledDatePicker } from 'src/components/date-picker'
 import { StyledTimePicker } from 'src/components/time-picker'
 

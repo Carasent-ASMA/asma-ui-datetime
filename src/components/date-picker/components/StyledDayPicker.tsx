@@ -15,7 +15,8 @@ export const StyledDayPicker: React.FC<{
 }> = ({ datePickerProps, popoverProps }) => {
     const { showOutsideDays = true, locale, selected, numberOfMonths, disabledDays, onClear } = datePickerProps
     const { onClose } = popoverProps
-    const [month, setMonth] = useState<Date | undefined>(new Date(Date.now()))
+    const startDate = datePickerProps.mode === 'range' ? datePickerProps.selected?.from : datePickerProps.selected
+    const [month, setMonth] = useState<Date | undefined>(startDate || new Date(Date.now()))
     const isNb = locale?.code === 'nb'
     const isOneMonthView = (numberOfMonths || 1) < 2
 

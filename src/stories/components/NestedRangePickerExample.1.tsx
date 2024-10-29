@@ -1,4 +1,4 @@
-import { RangePickerCompactExample } from './RangePickerCompactExample'
+import { RangePickerExample } from './RangePickerCompactExample'
 import { useToggleMenuVisibility } from 'src/hooks/useToggleMenuVisibility.hook'
 import { Popover } from '@mui/material'
 import { StyledButton } from 'src/shared-components/button'
@@ -29,8 +29,8 @@ export const NestedRangePickerExample: React.FC = () => {
                     horizontal: 'left',
                 }}
             >
-                <div style={{ padding: '5px' }}>
-                    <RangePickerCompactExample />
+                <div className='max-w-[300px]' style={{ padding: '5px', minHeight: '300px' }}>
+                    <RangePickerExample />
                 </div>
             </Popover>
         </div>

@@ -10,10 +10,10 @@ import { StyledDayPicker } from './components/StyledDayPicker'
 
 export const StyledDatePicker = (props: DatePickerProps) => {
     const isMobile = useIsMobileView()
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null)
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | HTMLDivElement | null>(null)
     const [positionAbove, setPositionAbove] = useState(false)
 
-    const openDatePicker = (event: React.MouseEvent<HTMLDivElement>) => {
+    const openDatePicker = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
         setAnchorEl(event.currentTarget)
         setPickerPosition(event, setPositionAbove)
     }
@@ -24,7 +24,7 @@ export const StyledDatePicker = (props: DatePickerProps) => {
 
     return (
         <>
-            <DatePickerInputIndex {...props} onClick={openDatePicker} />
+            <DatePickerInputIndex datePickerProps={props} onClick={openDatePicker} />
             {!isMobile && (
                 <StyledCalendarPicker
                     datePickerProps={{ ...props }}

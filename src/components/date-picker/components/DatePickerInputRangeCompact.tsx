@@ -1,29 +1,31 @@
-import { getValue } from '../helpers'
-import type { DatePickerProps } from '../types'
+import type { IDatePickerRange } from '../types'
 import clsx from 'clsx'
 import styles from './DatePickerInputRangeCompact.module.scss'
-import { StyledInputField } from 'src/shared-components/StyledInputField'
-import { OutlineCalendarMonth } from 'src/shared-components/OutlineCalendarMonth'
+import { BaseDatePickerInput } from './BaseDatePickerInput'
 
-export const DatePickerInputRangeCompact: React.FC<
-    DatePickerProps & { onClick: (e: React.MouseEvent<HTMLDivElement>) => void }
-> = (props) => {
+export const DatePickerInputRangeCompact: React.FC<{
+    datePickerProps: IDatePickerRange
+    onClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void
+}> = ({ datePickerProps, onClick }) => {
     const {
         dataTest,
         className,
         inputClassName,
         disabled,
-        placeholderFrom,
-        placeholderTo,
         dateFormat,
-        onClick,
+        onInputChange,
+        hideCalendar,
+        locale,
+        //
         labelFrom,
+        errorFrom,
+        helperTextFrom,
+        //
         labelTo,
-    } = props
-
-    if (props.mode !== 'range') return null
-    const value_from: string | undefined = getValue(props.selected?.from, dateFormat)
-    const value_to: string | undefined = getValue(props.selected?.to, dateFormat)
+        errorTo,
+        helperTextTo,
+        selected,
+    } = datePickerProps
 
     return (
         <div
@@ -33,41 +35,40 @@ export const DatePickerInputRangeCompact: React.FC<
                 styles['styled-date-picker-input-range-compact'],
                 disabled && styles['range-compact-disabled'],
             )}
-            onClick={(e) => !disabled && onClick(e)}
         >
-            <StyledInputField
-                label={labelFrom}
-                autoComplete='off'
-                size='small'
+            {/* start value */}
+            <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-from'
-                placeholder={placeholderFrom}
-                value={value_from}
+                dateFormat={dateFormat}
+                selected={selected?.from}
+                label={labelFrom}
+                inputClassName={inputClassName}
                 disabled={!!disabled}
-                className={inputClassName}
-                style={{ width: '144px' }}
-                InputProps={{
-                    endAdornment: <OutlineCalendarMonth width={24} height={24} />,
+                error={errorFrom}
+                helperText={helperTextFrom}
+                onClick={onClick}
+                onInputChange={(date?: Date) => {
+                    onInputChange?.({ from: date, to: selected?.to })
                 }}
-                FormHelperTextProps={{
-                    sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
-                }}
+                hideCalendar={hideCalendar}
+                locale={locale}
             />
-            <StyledInputField
-                label={labelTo}
-                autoComplete='off'
+            {/* end value */}
+            <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-to'
-                size='small'
-                placeholder={placeholderTo}
-                value={value_to}
+                dateFormat={dateFormat}
+                selected={selected?.to}
+                label={labelTo}
+                inputClassName={inputClassName}
                 disabled={!!disabled}
-                className={inputClassName}
-                style={{ width: '144px' }}
-                InputProps={{
-                    endAdornment: <OutlineCalendarMonth width={24} height={24} />,
+                error={errorTo}
+                helperText={helperTextTo}
+                onClick={onClick}
+                onInputChange={(date?: Date) => {
+                    onInputChange?.({ from: selected?.from, to: date })
                 }}
-                FormHelperTextProps={{
-                    sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
-                }}
+                hideCalendar={hideCalendar}
+                locale={locale}
             />
         </div>
     )

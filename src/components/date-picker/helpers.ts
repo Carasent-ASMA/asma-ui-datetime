@@ -1,12 +1,12 @@
 import { format } from 'date-fns'
 import type { Dispatch, SetStateAction } from 'react'
 
-export const getValue = (date?: Date, dateFormat = 'dd.MM.yy') => {
-    return date ? format(date, dateFormat) : ''
+export const getValue = (date?: Date, _dateFormat = 'dd/MM/yyyy') => {
+    return date ? format(date, 'dd/MM/yyyy') : ''
 }
 
 export const setPickerPosition = (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>,
     setPositionAbove: Dispatch<SetStateAction<boolean>>,
 ): void => {
     const windowHeight = window.innerHeight

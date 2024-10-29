@@ -1,50 +1,37 @@
-import type { DatePickerProps } from '../types'
-import { getValue } from '../helpers'
-import { StyledInputField } from 'src/shared-components/StyledInputField'
-import { OutlineCalendarMonth } from 'src/shared-components/OutlineCalendarMonth'
+import type { IDatePickerSingle } from '../types'
+import { BaseDatePickerInput } from './BaseDatePickerInput'
 
-
-export const DatePickerInputSingle: React.FC<
-    DatePickerProps & { onClick: (e: React.MouseEvent<HTMLDivElement>) => void }
-> = (props) => {
+export const DatePickerInputSingle: React.FC<{
+    datePickerProps: IDatePickerSingle
+    onClick: (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void
+}> = ({ datePickerProps, onClick }) => {
     const {
-        dataTest,
-        placeholder,
-        disabled,
-        onClick,
+        label,
         inputClassName,
-        onClear,
-        allowClear,
-        dateFormat,
-        error = false,
+        disabled,
         helperText,
-    } = props
-
-    if (props.mode !== 'single') return null
+        onInputChange,
+        selected,
+        error,
+        locale,
+        hideCalendar,
+        dateFormat,
+    } = datePickerProps
 
     return (
-        <StyledInputField
-            dataTest={dataTest}
-            placeholder={placeholder}
-            size='small'
-            onClick={(e) => !disabled && onClick(e)}
-            InputProps={{
-                endAdornment: <OutlineCalendarMonth width={24} height={24} />,
-            }}
-            value={getValue(props.selected, dateFormat)}
+        <BaseDatePickerInput
+            dataTest='styled-date-picker-input-single'
+            label={label}
+            inputClassName={inputClassName}
             disabled={!!disabled}
-            className={inputClassName}
-            style={{ width: '144px' }}
-            allowClear={allowClear}
-            onClear={() => {
-                onClear?.()
-            }}
-            label={props.label}
-            error={error}
             helperText={helperText}
-            FormHelperTextProps={{
-                sx: { '&.Mui-error': { position: 'absolute', bottom: '-24px' } },
-            }}
+            onClick={onClick}
+            onInputChange={(date?: Date) => onInputChange?.(date)}
+            selected={selected}
+            error={!!error}
+            locale={locale}
+            hideCalendar={hideCalendar}
+            dateFormat={dateFormat}
         />
     )
 }
