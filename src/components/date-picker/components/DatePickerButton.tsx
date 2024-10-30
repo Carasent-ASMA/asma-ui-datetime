@@ -10,6 +10,7 @@ interface DatePickerButtonProps {
 export const DatePickerButton: React.FC<DatePickerButtonProps> = ({ onClick, disabled }) => {
     return (
         <StyledButton
+            type='button'
             size='large'
             dataTest='DatePickerButton'
             startIcon={<OutlineCalendarMonth width={24} height={24} />}
