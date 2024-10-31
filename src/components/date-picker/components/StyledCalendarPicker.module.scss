@@ -141,7 +141,7 @@
 }
 
 .day_disabled {
-    @apply text-delta-300 font-normal cursor-not-allowed;
+    @apply text-delta-300 font-normal cursor-not-allowed  #{!important};
 }
 
 .day_hidden {
