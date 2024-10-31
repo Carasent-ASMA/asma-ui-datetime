@@ -16,6 +16,7 @@ export const DatePickerInputSingle: React.FC<{
         locale,
         hideCalendar,
         dateFormat,
+        disabledDays,
     } = datePickerProps
 
     return (
@@ -32,6 +33,7 @@ export const DatePickerInputSingle: React.FC<{
             locale={locale}
             hideCalendar={hideCalendar}
             dateFormat={dateFormat}
+            disabledDays={disabledDays}
         />
     )
 }

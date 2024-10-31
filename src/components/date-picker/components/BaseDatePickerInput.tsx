@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { getValue } from '../helpers'
 import { useDatePickerValidation } from '../hooks/useDatePickerValidation'
 import { parse, isValid as isValidDateFns, type Locale } from 'date-fns'
+import type { Matcher } from 'react-day-picker'
 
 export type IBaseDatePickerInput = {
     dataTest: string
@@ -19,6 +20,7 @@ export type IBaseDatePickerInput = {
     onInputChange?: (date?: Date) => void
     hideCalendar?: boolean
     locale?: Locale
+    disabledDays?: Matcher | Matcher[]
 }
 
 export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
@@ -31,44 +33,40 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
     onInputChange,
     hideCalendar,
     locale,
+    disabledDays,
     ...props
 }) => {
-    const { validationError, handleValidation } = useDatePickerValidation()
+    const { validationError, handleValidation, helperTxt } = useDatePickerValidation()
     const { maskRef } = useDatePickerMask()
 
     const [value, setValue] = useState(selected ? getValue(selected, dateFormat) : '')
 
     useEffect(() => {
         setValue(selected ? getValue(selected, dateFormat) : '')
-    }, [dateFormat, selected])
+        handleValidation({ value: getValue(selected, dateFormat), disabledDays, localeCode: locale?.code })
+    }, [selected])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value
         const numbers = newValue.replace(/\D/g, '')
 
-        handleValidation(newValue)
+        const isError = handleValidation({ value: newValue, disabledDays, localeCode: locale?.code })
         setValue(newValue)
         const buildingDate = parse(newValue, 'dd/MM/yyyy', new Date())
         const isValid = isValidDateFns(buildingDate)
+
         const parsedDate = isValid ? buildingDate : undefined
 
-        if (parsedDate || (!parsedDate && !numbers.length)) {
+        if ((parsedDate && !isError) || (!parsedDate && !numbers.length)) {
             onInputChange?.(parsedDate)
         }
-    }
-
-    let helperTxt = helperText
-    if (validationError) {
-        const isNb = locale?.code === 'nb'
-        helperTxt = isNb ? 'Ugyldig datoformat' : 'Invalid date format'
-    } else if (error) {
-        helperTxt = error
     }
 
     return (
         <div className='flex gap-1'>
             <StyledInputField
                 {...props}
+                inputMode='numeric'
                 autoComplete='off'
                 inputRef={maskRef}
                 placeholder={'__/__/____'}
@@ -77,7 +75,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                 className={inputClassName}
                 style={{ width: '140px' }}
                 error={validationError || error}
-                helperText={helperTxt}
+                helperText={helperText || helperTxt}
                 FormHelperTextProps={{
                     sx: { '&.MuiFormHelperText-root': { position: 'absolute', bottom: '-24px' } },
                 }}
@@ -90,7 +88,11 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                 onBlur={() => {
                     if (selected) {
                         setValue(getValue(selected, dateFormat))
-                        handleValidation(getValue(selected, dateFormat))
+                        handleValidation({
+                            value: getValue(selected, dateFormat),
+                            disabledDays,
+                            localeCode: locale?.code,
+                        })
                     }
                 }}
             />

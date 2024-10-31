@@ -1,5 +1,7 @@
+import { addDays } from 'date-fns'
 import { useState } from 'react'
 import { StyledDatePicker } from 'src/components/date-picker'
+import { setMidnightTime, setZeroTime } from 'src/helpers'
 
 export const SinglePickerExample: React.FC = () => {
     const [date, setDate] = useState<Date>()
@@ -17,7 +19,10 @@ export const SinglePickerExample: React.FC = () => {
                 onInputChange={(date: Date | undefined) => setDate(date)}
                 placeholder='Placeholder'
                 label='Label'
-                // disabledDays={{ before: new Date(Date.now()) }}
+                disabledDays={{
+                    before: setZeroTime(addDays(new Date(Date.now()), 2)),
+                    after: setMidnightTime(addDays(new Date(Date.now()), 4)),
+                }}
                 dateFormat='dd.MM.yyyy'
             />
         </div>

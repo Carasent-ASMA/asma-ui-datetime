@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import { StyledCalendarPicker } from './components/StyledCalendarPicker'
 import type { DatePickerProps } from './types'
 import { setPickerPosition } from './helpers'

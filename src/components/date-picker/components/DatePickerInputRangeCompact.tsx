@@ -2,6 +2,7 @@ import type { IDatePickerRange } from '../types'
 import clsx from 'clsx'
 import styles from './DatePickerInputRangeCompact.module.scss'
 import { BaseDatePickerInput } from './BaseDatePickerInput'
+import { addDays } from 'date-fns'
 
 export const DatePickerInputRangeCompact: React.FC<{
     datePickerProps: IDatePickerRange
@@ -25,6 +26,8 @@ export const DatePickerInputRangeCompact: React.FC<{
         errorTo,
         helperTextTo,
         selected,
+        // 
+        disabledDays
     } = datePickerProps
 
     return (
@@ -48,10 +51,15 @@ export const DatePickerInputRangeCompact: React.FC<{
                 helperText={helperTextFrom}
                 onClick={onClick}
                 onInputChange={(date?: Date) => {
-                    onInputChange?.({ from: date, to: selected?.to })
+                    if (date && selected?.to && date.getTime() > selected?.to.getTime()) {
+                        onInputChange?.({ from: date, to: addDays(date, 1) })
+                    } else {
+                        onInputChange?.({ from: date, to: selected?.to })
+                    }
                 }}
                 hideCalendar={hideCalendar}
                 locale={locale}
+                disabledDays={disabledDays}
             />
             {/* end value */}
             <BaseDatePickerInput
@@ -65,7 +73,11 @@ export const DatePickerInputRangeCompact: React.FC<{
                 helperText={helperTextTo}
                 onClick={onClick}
                 onInputChange={(date?: Date) => {
-                    onInputChange?.({ from: selected?.from, to: date })
+                    if (date && selected?.from && date.getTime() < selected?.from.getTime()) {
+                        onInputChange?.({ from: addDays(date, -1), to: date })
+                    } else {
+                        onInputChange?.({ from: selected?.from, to: date })
+                    }
                 }}
                 hideCalendar={hideCalendar}
                 locale={locale}

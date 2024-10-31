@@ -15,7 +15,7 @@ export const StyledCalendarPickerSelectMonth: React.FC<DropdownProps> = (props) 
     const selectedOptions = monthsList?.map((month) => ({ id: month.props.value, label: month.props.children }))
 
     return (
-        <StyledFormControl style={{ width: '105px', marginLeft: '-2px' }}>
+        <StyledFormControl style={{ marginLeft: '-2px', marginRight: '8px' }}>
             <StyledSelect
                 dataTest='StyledCalendarPickerSelectMonth'
                 size='small'

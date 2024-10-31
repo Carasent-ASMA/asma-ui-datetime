@@ -13,11 +13,11 @@ export const StyledDayPicker: React.FC<{
     datePickerProps: DatePickerProps
     popoverProps: PopoverProps
 }> = ({ datePickerProps, popoverProps }) => {
-    const { showOutsideDays = true, locale, selected, numberOfMonths, disabledDays, onClear } = datePickerProps
+    const { showOutsideDays = true, locale = enGB, selected, numberOfMonths, disabledDays, onClear } = datePickerProps
     const { onClose } = popoverProps
     const startDate = datePickerProps.mode === 'range' ? datePickerProps.selected?.from : datePickerProps.selected
     const [month, setMonth] = useState<Date | undefined>(startDate || new Date(Date.now()))
-    const isNb = locale?.code === 'nb'
+    const isNb = locale.code === 'nb'
     const isOneMonthView = (numberOfMonths || 1) < 2
 
     const removeSelection = (e: React.MouseEvent) =>
@@ -31,7 +31,7 @@ export const StyledDayPicker: React.FC<{
                 setMonth(e)
             }}
             captionLayout='dropdown'
-            locale={locale ? locale : enGB}
+            locale={locale}
             fromYear={datePickerProps.fromYear || 1900}
             toYear={datePickerProps.toYear || 2100}
             data-test={'calendar-picker'}

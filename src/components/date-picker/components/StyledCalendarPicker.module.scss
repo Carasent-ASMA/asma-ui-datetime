@@ -74,7 +74,7 @@
 }
 
 .cell {
-    @apply text-[16px] leading-[20px] w-[40px] relative text-gray-800;
+    @apply text-[16px] leading-[20px] w-[40px] relative text-delta-800;
 
     &.has {
         @apply bg-gama-50;
@@ -103,7 +103,7 @@
 }
 
 .day_today {
-    @apply text-[16px] leading-[24px] bg-gama-50 font-bold text-gray-800 border-2 border-gama-400 hover:bg-gama-100 #{!important};
+    @apply text-[16px] leading-[24px] bg-gama-50 font-bold text-delta-800 border-2 border-gama-400 hover:bg-gama-100 #{!important};
 
     &:hover {
         @apply bg-gama-100 #{!important};
@@ -132,16 +132,16 @@
     }
 
     &.day_range_middle {
-        @apply bg-gama-50 text-gray-800 rounded-none border-none outline-none shadow-none hover:bg-gama-100 #{!important};
+        @apply bg-gama-50 text-delta-800 rounded-none border-none outline-none shadow-none hover:bg-gama-100 #{!important};
     }
 }
 
 .day_outside {
-    @apply text-gray-400 font-normal;
+    @apply text-delta-600 font-normal;
 }
 
 .day_disabled {
-    @apply text-gray-400 font-normal;
+    @apply text-delta-300 font-normal cursor-not-allowed;
 }
 
 .day_hidden {
