@@ -66,7 +66,6 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
         <div className='flex gap-1'>
             <StyledInputField
                 {...props}
-                inputMode='numeric'
                 autoComplete='off'
                 inputRef={maskRef}
                 placeholder={'__/__/____'}
@@ -80,6 +79,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                     sx: { '&.MuiFormHelperText-root': { position: 'absolute', bottom: '-24px' } },
                 }}
                 inputProps={{
+                    inputMode: 'numeric',
                     style: {
                         fontFamily: 'monospace',
                     },
