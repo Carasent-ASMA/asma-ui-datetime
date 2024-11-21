@@ -1,4 +1,4 @@
-import { format, isAfter, isBefore } from 'date-fns'
+import { format, isAfter, isBefore, set } from 'date-fns'
 import type { Dispatch, SetStateAction } from 'react'
 import type { Matcher } from 'react-day-picker'
 
@@ -32,8 +32,9 @@ export const isDisabledDate = ({
     if (!parsedDate || !(typeof disabledDays === 'object')) return false
 
     let isDisabled = false
+
     if (
-        ('before' in disabledDays && isBefore(parsedDate, disabledDays.before)) ||
+        ('before' in disabledDays && isBefore(set(parsedDate, { minutes: 1 }), disabledDays.before)) ||
         ('after' in disabledDays && isAfter(parsedDate, disabledDays.after))
     ) {
         isDisabled = true
