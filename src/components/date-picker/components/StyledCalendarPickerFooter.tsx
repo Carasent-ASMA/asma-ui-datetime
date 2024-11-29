@@ -40,7 +40,7 @@ export const StyledCalendarPickerFooter: React.FC<{
                 disabled={eraserDisabled}
                 style={{ minWidth: '60px' }}
             >
-                {isNb ? 'Klar' : 'Clear'}
+                {isNb ? 'Nullstill' : 'Clear'}
             </StyledButton>
             <div className='rdp-custom-caption-navigation' style={{ display: 'flex', gap: 8 }}>
                 <StyledButton
