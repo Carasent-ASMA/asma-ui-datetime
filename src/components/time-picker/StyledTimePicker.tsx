@@ -22,7 +22,7 @@ export const StyledTimePicker: React.FC<StyledTimePickerProps> = (props) => {
 
         setLocalValue(nextValue)
         if (nextValue.length === 5) {
-            const validTime = getTimeFromValue(nextValue)
+            const validTime = getTimeFromValue(nextValue, value)
 
             if (validTime) {
                 onSelect(validTime)
