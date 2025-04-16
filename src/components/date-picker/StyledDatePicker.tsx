@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyledCalendarPicker } from './components/StyledCalendarPicker'
 import type { DatePickerProps } from './types'
 import { setPickerPosition } from './helpers'
@@ -6,6 +6,7 @@ import { DatePickerInputIndex } from './components/DatePickerInputIndex'
 import { useIsMobileView } from 'src/hooks/useWindowWidthSize.hook'
 import { Drawer } from '@mui/material'
 import { StyledDayPicker } from './components/StyledDayPicker'
+import { useBackNavigationClose } from 'src/hooks/useBackNavigationClose.hook'
 
 export const StyledDatePicker = (props: DatePickerProps) => {
     const isMobile = useIsMobileView()
@@ -17,9 +18,9 @@ export const StyledDatePicker = (props: DatePickerProps) => {
         setPickerPosition(event, setPositionAbove)
     }
 
-    const onClose = () => {
-        setAnchorEl(null)
-    }
+    const onClose = () => setAnchorEl(null)
+
+    useBackNavigationClose({ open: !!anchorEl, onClose })
 
     return (
         <>

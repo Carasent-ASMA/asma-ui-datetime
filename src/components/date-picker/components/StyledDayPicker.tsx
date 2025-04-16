@@ -65,7 +65,7 @@ export const StyledDayPicker: React.FC<{
             }}
             components={{
                 Caption: (props: CaptionProps) => (
-                    <CustomCaption {...props} setMonth={setMonth} month={month} isNb={isNb} />
+                    <CustomCaption {...props} setMonth={setMonth} month={month} isNb={isNb} onClose={onClose}/>
                 ),
                 Dropdown: (props: DropdownProps) => {
                     return props.name === 'months' ? (
