@@ -31,6 +31,7 @@ export const StyledDayPicker: React.FC<{
                 setMonth(e)
             }}
             captionLayout='dropdown'
+            weekStartsOn={1}
             locale={locale}
             fromYear={datePickerProps.fromYear || 1900}
             toYear={datePickerProps.toYear || 2100}
