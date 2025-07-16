@@ -17,11 +17,12 @@ export const DatePickerInputSingle: React.FC<{
         hideCalendar,
         dateFormat,
         disabledDays,
+        dataTest,
     } = datePickerProps
 
     return (
         <BaseDatePickerInput
-            dataTest='styled-date-picker-input-single'
+            dataTest={dataTest}
             label={label}
             inputClassName={inputClassName}
             disabled={!!disabled}
