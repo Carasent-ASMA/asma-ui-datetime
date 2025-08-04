@@ -66,6 +66,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
         <div className='flex gap-1'>
             <StyledInputField
                 {...props}
+                data-testid={props.dataTest}
                 autoComplete='off'
                 inputRef={maskRef}
                 placeholder={'__/__/____'}

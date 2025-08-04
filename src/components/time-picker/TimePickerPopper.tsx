@@ -34,7 +34,8 @@ export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: Po
                             }}
                         >
                             <StyledButton
-                                dataTest=''
+                                dataTest='time-picker-erase-button'
+                                data-testid='time-picker-erase-button'
                                 variant='text'
                                 onClick={handleClear}
                                 size='small'
@@ -44,7 +45,8 @@ export const TimePickerPopper: React.FC<StyledTimePickerProps & { popupState: Po
                                 <EraserIcon width={24} height={24} />
                             </StyledButton>
                             <StyledButton
-                                dataTest=''
+                                dataTest='time-picker-confirm-button'
+                                data-testid='time-picker-confirm-button'
                                 variant='contained'
                                 size='small'
                                 onClick={() => popupState.close()}

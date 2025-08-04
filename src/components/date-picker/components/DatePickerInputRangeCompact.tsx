@@ -26,13 +26,13 @@ export const DatePickerInputRangeCompact: React.FC<{
         errorTo,
         helperTextTo,
         selected,
-        // 
-        disabledDays
+        //
+        disabledDays,
     } = datePickerProps
 
     return (
         <div
-            data-test={dataTest}
+            data-testid={dataTest}
             className={clsx(
                 className,
                 styles['styled-date-picker-input-range-compact'],
@@ -42,6 +42,7 @@ export const DatePickerInputRangeCompact: React.FC<{
             {/* start value */}
             <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-from'
+                data-testid='styled-date-picker-input-range-from'
                 dateFormat={dateFormat}
                 selected={selected?.from}
                 label={labelFrom}
@@ -64,6 +65,7 @@ export const DatePickerInputRangeCompact: React.FC<{
             {/* end value */}
             <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-to'
+                data-testid='styled-date-picker-input-range-to'
                 dateFormat={dateFormat}
                 selected={selected?.to}
                 label={labelTo}

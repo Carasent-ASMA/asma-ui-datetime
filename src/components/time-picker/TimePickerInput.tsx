@@ -45,6 +45,7 @@ export const TimePickerInput: React.FC<
             autoComplete='off'
             type='text'
             dataTest={dataTest}
+            data-testid={dataTest}
             placeholder={placeholder}
             size='small'
             error={!isValidTime || error}

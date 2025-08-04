@@ -32,6 +32,7 @@ export const TimePickerColumn: React.FC<TimePickerColumnProps> = ({ type, value,
                 return (
                     <div
                         key={idx}
+                        role='button'
                         className={clsx(
                             className,
                             styles['styled-time-picker-root_cell'],
