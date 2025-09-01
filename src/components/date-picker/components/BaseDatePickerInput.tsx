@@ -34,6 +34,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
     hideCalendar,
     locale,
     disabledDays,
+    label,
     ...props
 }) => {
     const { validationError, handleValidation, helperTxt } = useDatePickerValidation()
@@ -63,42 +64,45 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
     }
 
     return (
-        <div className='flex gap-1'>
-            <StyledInputField
-                {...props}
-                data-testid={props.dataTest}
-                autoComplete='off'
-                inputRef={maskRef}
-                placeholder={'__/__/____'}
-                size='small'
-                value={value}
-                className={inputClassName}
-                style={{ width: '140px' }}
-                error={validationError || error}
-                helperText={helperText || helperTxt}
-                FormHelperTextProps={{
-                    sx: { '&.MuiFormHelperText-root': { position: 'absolute', bottom: '-24px' } },
-                }}
-                inputProps={{
-                    inputMode: 'numeric',
-                    style: {
-                        fontFamily: 'monospace',
-                    },
-                }}
-                onChange={handleInputChange}
-                onBlur={() => {
-                    if (selected) {
-                        setValue(getValue(selected, dateFormat))
-                        handleValidation({
-                            value: getValue(selected, dateFormat),
-                            disabledDays,
-                            localeCode: locale?.code,
-                        })
-                    }
-                }}
-            />
+        <div>
+            <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>
+            <div className='flex gap-1'>
+                <StyledInputField
+                    {...props}
+                    data-testid={props.dataTest}
+                    autoComplete='off'
+                    inputRef={maskRef}
+                    placeholder={'  /  /    '}
+                    size='small'
+                    value={value}
+                    className={inputClassName}
+                    style={{ width: '140px' }}
+                    error={validationError || error}
+                    helperText={helperText || helperTxt}
+                    FormHelperTextProps={{
+                        sx: { '&.MuiFormHelperText-root': { position: 'absolute', bottom: '-24px' } },
+                    }}
+                    inputProps={{
+                        inputMode: 'numeric',
+                        style: {
+                            fontFamily: 'monospace',
+                        },
+                    }}
+                    onChange={handleInputChange}
+                    onBlur={() => {
+                        if (selected) {
+                            setValue(getValue(selected, dateFormat))
+                            handleValidation({
+                                value: getValue(selected, dateFormat),
+                                disabledDays,
+                                localeCode: locale?.code,
+                            })
+                        }
+                    }}
+                />
 
-            {!hideCalendar && <DatePickerButton onClick={onClick} disabled={!!props.disabled} />}
+                {!hideCalendar && <DatePickerButton onClick={onClick} disabled={!!props.disabled} />}
+            </div>
         </div>
     )
 }

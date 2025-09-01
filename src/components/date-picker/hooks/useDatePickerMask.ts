@@ -2,9 +2,9 @@ import { useMask } from '@react-input/mask'
 
 export const useDatePickerMask = () => {
     const maskRef = useMask({
-        mask: '__/__/____',
+        mask: '  /  /    ',
         replacement: {
-            _: /[0-9]/,
+            ' ': /[0-9]/,
         },
         showMask: true,
     })

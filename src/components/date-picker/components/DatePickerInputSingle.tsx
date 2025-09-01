@@ -6,10 +6,10 @@ export const DatePickerInputSingle: React.FC<{
     onClick: (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void
 }> = ({ datePickerProps, onClick }) => {
     const {
-        label,
         inputClassName,
         disabled,
         helperText,
+        label,
         onInputChange,
         selected,
         error,
@@ -23,7 +23,6 @@ export const DatePickerInputSingle: React.FC<{
     return (
         <BaseDatePickerInput
             dataTest={dataTest}
-            label={label}
             inputClassName={inputClassName}
             disabled={!!disabled}
             helperText={helperText}
@@ -35,6 +34,7 @@ export const DatePickerInputSingle: React.FC<{
             hideCalendar={hideCalendar}
             dateFormat={dateFormat}
             disabledDays={disabledDays}
+            label={label}
         />
     )
 }

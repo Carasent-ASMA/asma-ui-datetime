@@ -45,7 +45,6 @@ export const DatePickerInputRangeCompact: React.FC<{
                 data-testid='styled-date-picker-input-range-from'
                 dateFormat={dateFormat}
                 selected={selected?.from}
-                label={labelFrom}
                 inputClassName={inputClassName}
                 disabled={!!disabled}
                 error={errorFrom}
@@ -61,6 +60,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 hideCalendar={hideCalendar}
                 locale={locale}
                 disabledDays={disabledDays}
+                label={labelFrom}
             />
             {/* end value */}
             <BaseDatePickerInput
@@ -68,7 +68,6 @@ export const DatePickerInputRangeCompact: React.FC<{
                 data-testid='styled-date-picker-input-range-to'
                 dateFormat={dateFormat}
                 selected={selected?.to}
-                label={labelTo}
                 inputClassName={inputClassName}
                 disabled={!!disabled}
                 error={errorTo}
@@ -83,6 +82,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 }}
                 hideCalendar={hideCalendar}
                 locale={locale}
+                label={labelTo}
             />
         </div>
     )

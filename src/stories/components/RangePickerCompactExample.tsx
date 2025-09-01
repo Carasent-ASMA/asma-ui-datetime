@@ -15,8 +15,8 @@ export const RangePickerExample: React.FC = () => {
                 locale={nb}
                 placeholderFrom='Fra'
                 placeholderTo='Til'
-                labelFrom='Fra'
-                labelTo='Til'
+                labelFrom='Start date '
+                labelTo='End date '
                 selected={rangeCompact}
                 onSelect={(data) => {
                     const selected = {

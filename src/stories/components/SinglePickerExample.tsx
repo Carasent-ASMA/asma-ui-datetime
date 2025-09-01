@@ -18,7 +18,7 @@ export const SinglePickerExample: React.FC = () => {
                 }}
                 onInputChange={(date: Date | undefined) => setDate(date)}
                 placeholder='Placeholder'
-                label='Label'
+                label='Test Label '
                 disabledDays={{
                     before: setZeroTime(addDays(new Date(Date.now()), 2)),
                     after: setMidnightTime(addDays(new Date(Date.now()), 4)),
