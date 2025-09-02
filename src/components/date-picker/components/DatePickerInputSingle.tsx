@@ -18,6 +18,7 @@ export const DatePickerInputSingle: React.FC<{
         dateFormat,
         disabledDays,
         dataTest,
+        errorText,
     } = datePickerProps
 
     return (
@@ -35,6 +36,7 @@ export const DatePickerInputSingle: React.FC<{
             dateFormat={dateFormat}
             disabledDays={disabledDays}
             label={label}
+            errorText={errorText}
         />
     )
 }

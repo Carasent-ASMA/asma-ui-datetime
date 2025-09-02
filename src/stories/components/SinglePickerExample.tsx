@@ -24,6 +24,8 @@ export const SinglePickerExample: React.FC = () => {
                     after: setMidnightTime(addDays(new Date(Date.now()), 4)),
                 }}
                 dateFormat='dd.MM.yyyy'
+                helperText='Sorry this is a helper text verry long with some strange words so sorry so its verry long veery long  '
+                errorText='Here is error state '
             />
         </div>
     )

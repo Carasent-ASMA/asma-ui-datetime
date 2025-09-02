@@ -21,12 +21,14 @@ export const DatePickerInputRangeCompact: React.FC<{
         labelFrom,
         errorFrom,
         helperTextFrom,
+        errorTextFrom,
         //
         labelTo,
         errorTo,
         helperTextTo,
-        selected,
+        errorTextTo,
         //
+        selected,
         disabledDays,
     } = datePickerProps
 
@@ -61,6 +63,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 locale={locale}
                 disabledDays={disabledDays}
                 label={labelFrom}
+                errorText={errorTextFrom}
             />
             {/* end value */}
             <BaseDatePickerInput
@@ -83,6 +86,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 hideCalendar={hideCalendar}
                 locale={locale}
                 label={labelTo}
+                errorText={errorTextTo}
             />
         </div>
     )

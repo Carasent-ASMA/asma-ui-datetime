@@ -25,6 +25,7 @@ type DefaultSingleProps = {
     labelTo?: never
     helperText?: React.ReactNode
     error?: boolean
+    errorText?: React.ReactNode
     allowClear?: boolean
     onInputChange?: (date: Date | undefined) => void
 }
@@ -43,6 +44,8 @@ type CompactRangeProps = {
     helperTextTo?: React.ReactNode
     errorFrom?: boolean
     errorTo?: boolean
+    errorTextFrom?: React.ReactNode
+    errorTextTo?: React.ReactNode
     onInputChange?: ({ from, to }: { from: Date | undefined; to: Date | undefined }) => void
 }
 
