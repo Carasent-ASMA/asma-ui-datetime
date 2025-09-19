@@ -51,29 +51,45 @@ export const StyledTimePicker: React.FC<StyledTimePickerProps> = (props) => {
 
     return (
         <PopupState variant='popper' popupId='time-picker-popper'>
-            {(popupState) => (
-                <ClickAwayListener mouseEvent='onMouseDown' onClickAway={() => popupState.close()}>
-                    <div className='w-auto h-auto relative'>
-                        <div className='flex items-center justify-center h-fit m-0 p-0' {...bindTrigger(popupState)}>
-                            <TimePickerInput
-                                {...props}
-                                popupState={popupState}
-                                localValue={localValue}
-                                isValidTime={isValidTime}
-                                handleChange={(e) => handleChange(e, popupState)}
-                            />
+            {(popupState) => {
+                if (props.disabled || props.readOnly)
+                    return (
+                        <TimePickerInput
+                            {...props}
+                            popupState={popupState}
+                            localValue={localValue}
+                            isValidTime={isValidTime}
+                            handleChange={(e) => handleChange(e, popupState)}
+                        />
+                    )
+
+                return (
+                    <ClickAwayListener mouseEvent='onMouseDown' onClickAway={() => popupState.close()}>
+                        <div className='w-auto h-auto relative'>
+                            <div
+                                className='flex items-center justify-center h-fit m-0 p-0'
+                                {...bindTrigger(popupState)}
+                            >
+                                <TimePickerInput
+                                    {...props}
+                                    popupState={popupState}
+                                    localValue={localValue}
+                                    isValidTime={isValidTime}
+                                    handleChange={(e) => handleChange(e, popupState)}
+                                />
+                            </div>
+                            {popupState.isOpen && (
+                                <TimePickerPopper
+                                    {...props}
+                                    popupState={popupState}
+                                    handleClear={handleClear}
+                                    onSelect={(time) => handleSelect(time)}
+                                />
+                            )}
                         </div>
-                        {popupState.isOpen && (
-                            <TimePickerPopper
-                                {...props}
-                                popupState={popupState}
-                                handleClear={handleClear}
-                                onSelect={(time) => handleSelect(time)}
-                            />
-                        )}
-                    </div>
-                </ClickAwayListener>
-            )}
+                    </ClickAwayListener>
+                )
+            }}
         </PopupState>
     )
 }

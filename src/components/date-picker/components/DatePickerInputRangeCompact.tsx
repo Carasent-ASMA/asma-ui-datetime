@@ -13,10 +13,12 @@ export const DatePickerInputRangeCompact: React.FC<{
         className,
         inputClassName,
         disabled,
+        readOnly,
         dateFormat,
         onInputChange,
         hideCalendar,
         locale,
+
         //
         labelFrom,
         errorFrom,
@@ -48,6 +50,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 dateFormat={dateFormat}
                 selected={selected?.from}
                 inputClassName={inputClassName}
+                readOnly={readOnly}
                 disabled={!!disabled}
                 error={errorFrom}
                 helperText={helperTextFrom}
@@ -73,6 +76,7 @@ export const DatePickerInputRangeCompact: React.FC<{
                 selected={selected?.to}
                 inputClassName={inputClassName}
                 disabled={!!disabled}
+                readOnly={readOnly}
                 error={errorTo}
                 helperText={helperTextTo}
                 onClick={onClick}

@@ -18,6 +18,7 @@ export const DatePickerInputSingle: React.FC<{
         dateFormat,
         disabledDays,
         dataTest,
+        readOnly,
         errorText,
     } = datePickerProps
 
@@ -25,6 +26,7 @@ export const DatePickerInputSingle: React.FC<{
         <BaseDatePickerInput
             dataTest={dataTest}
             inputClassName={inputClassName}
+            readOnly={readOnly}
             disabled={!!disabled}
             helperText={helperText}
             onClick={onClick}

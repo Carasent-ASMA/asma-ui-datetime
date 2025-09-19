@@ -8,7 +8,7 @@ export const RangePickerExample: React.FC = () => {
     const [rangeCompact, setRangeCompact] = useState<DateRange>()
 
     return (
-        <div className='pt-4'>
+        <div className='pt-4 flex flex-col gap-6'>
             <StyledDatePicker
                 mode='range'
                 dataTest='range-picker-example'
@@ -17,6 +17,62 @@ export const RangePickerExample: React.FC = () => {
                 placeholderTo='Til'
                 labelFrom='Start date '
                 labelTo='End date '
+                selected={rangeCompact}
+                onSelect={(data) => {
+                    const selected = {
+                        from: data?.from ? setZeroTime(data.from) : undefined,
+                        to: data?.to ? setMidnightTime(data.to) : undefined,
+                    }
+                    setRangeCompact(selected)
+                }}
+                onInputChange={(data) => {
+                    const selected = {
+                        from: data?.from ? setZeroTime(data.from) : undefined,
+                        to: data?.to ? setMidnightTime(data.to) : undefined,
+                    }
+                    setRangeCompact(selected)
+                }}
+                dateFormat={'dd.MM.yyyy'}
+                helperTextFrom='* Påkrevd'
+                // hideCalendar
+            />
+            <StyledDatePicker
+                mode='range'
+                dataTest='range-picker-example'
+                locale={nb}
+                placeholderFrom='Fra'
+                placeholderTo='Til'
+                labelFrom='Start date '
+                labelTo='End date '
+                selected={rangeCompact}
+                onSelect={(data) => {
+                    const selected = {
+                        from: data?.from ? setZeroTime(data.from) : undefined,
+                        to: data?.to ? setMidnightTime(data.to) : undefined,
+                    }
+                    setRangeCompact(selected)
+                }}
+                disabled
+                onInputChange={(data) => {
+                    const selected = {
+                        from: data?.from ? setZeroTime(data.from) : undefined,
+                        to: data?.to ? setMidnightTime(data.to) : undefined,
+                    }
+                    setRangeCompact(selected)
+                }}
+                dateFormat={'dd.MM.yyyy'}
+                helperTextFrom='* Påkrevd'
+                // hideCalendar
+            />
+            <StyledDatePicker
+                mode='range'
+                dataTest='range-picker-example'
+                locale={nb}
+                placeholderFrom='Fra'
+                placeholderTo='Til'
+                labelFrom='Start date '
+                labelTo='End date '
+                readOnly
                 selected={rangeCompact}
                 onSelect={(data) => {
                     const selected = {

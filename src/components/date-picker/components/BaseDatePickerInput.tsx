@@ -14,6 +14,7 @@ export type IBaseDatePickerInput = {
     label?: string
     inputClassName?: string
     disabled: boolean
+    readOnly?: boolean
     helperText: React.ReactNode
     errorText: React.ReactNode
     onClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void
@@ -39,6 +40,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
     locale,
     disabledDays,
     label,
+    readOnly,
     ...props
 }) => {
     const { validationError, handleValidation, helperTxt } = useDatePickerValidation()
@@ -89,6 +91,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                 <div className='relative'>
                     <StyledInputField
                         {...props}
+                        readOnly={readOnly}
                         data-testid={props.dataTest}
                         autoComplete='off'
                         inputRef={maskRef}
@@ -128,7 +131,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                     </div>
                 </div>
 
-                {!hideCalendar && <DatePickerButton onClick={onClick} disabled={!!props.disabled} />}
+                {!hideCalendar && <DatePickerButton onClick={onClick} disabled={!!props.disabled || !!readOnly} />}
             </div>
         </div>
     )

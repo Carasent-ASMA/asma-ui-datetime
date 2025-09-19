@@ -29,6 +29,7 @@ export const TimePickerInput: React.FC<
         isValidTime,
         localValue,
         name,
+        readOnly,
     } = props
 
     const inputRef = useMask({
@@ -55,7 +56,11 @@ export const TimePickerInput: React.FC<
             onChange={handleChange}
             InputProps={{
                 endAdornment: (
-                    <ClockOutlineIcon width={24} height={24} onClick={() => !disabled && popupState.open()} />
+                    <ClockOutlineIcon
+                        width={24}
+                        height={24}
+                        onClick={() => !disabled && !readOnly && popupState.open()}
+                    />
                 ),
             }}
             value={localValue}
@@ -75,6 +80,7 @@ export const TimePickerInput: React.FC<
                 },
             }}
             disabled={disabled}
+            readOnly={readOnly}
             className={inputClassName}
             label={label}
         />
