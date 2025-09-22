@@ -87,7 +87,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
         <div>
             {label && <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>}
 
-            <div className='w-[200px] flex gap-1'>
+            <div className='flex gap-1'>
                 <div className='relative'>
                     <StyledInputField
                         {...props}
@@ -130,8 +130,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                         <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
                     </div>
                 </div>
-
-                {!hideCalendar && <DatePickerButton onClick={onClick} disabled={!!props.disabled || !!readOnly} />}
+                {!hideCalendar && !readOnly && <DatePickerButton onClick={onClick} disabled={!!props.disabled} />}
             </div>
         </div>
     )

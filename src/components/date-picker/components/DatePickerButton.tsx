@@ -1,4 +1,5 @@
 import React from 'react'
+import { cn } from 'src/helpers/cn'
 import { StyledButton } from 'src/shared-components/button'
 import { OutlineCalendarMonth } from 'src/shared-components/OutlineCalendarMonth'
 
@@ -16,6 +17,7 @@ export const DatePickerButton: React.FC<DatePickerButtonProps> = ({ onClick, dis
             startIcon={<OutlineCalendarMonth width={24} height={24} />}
             variant='outlined'
             onClick={(e) => !disabled && onClick(e)}
+            className={cn(disabled && 'cursor-not-allowed')}
         />
     )
 }
