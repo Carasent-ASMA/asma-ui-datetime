@@ -83,6 +83,49 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
 
     const hasError = !!(validationError || error)
     const text = hasError ? errorText || helperTxt : formatHelperText(helperText)
+
+    if (readOnly)
+        return (
+            <div>
+                {label && <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>}
+
+                <div className='flex gap-1'>
+                    <div className='relative'>
+                        <StyledInputField
+                            {...props}
+                            readOnly={readOnly}
+                            data-testid={props.dataTest}
+                            autoComplete='off'
+                            size='small'
+                            value={value.replaceAll('/', '.')}
+                            className={inputClassName}
+                            style={{ width: '120px' }}
+                            error={hasError}
+                            helperText={text}
+                            FormHelperTextProps={{
+                                sx: {
+                                    '&.MuiFormHelperText-root': {
+                                        position: 'absolute',
+                                        bottom: '-24px',
+                                        width: '450px',
+                                    },
+                                },
+                            }}
+                        />
+                        <div
+                            className={cn(
+                                'absolute w-6 h-6 right-2 top-2 flex items-center justify-center',
+                                'transform-gpu transition-all duration-300 ease-in-out',
+                                hasError ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
+                            )}
+                        >
+                            <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+
     return (
         <div>
             {label && <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>}
