@@ -21,7 +21,7 @@ type DefaultSingleProps = {
     placeholderFrom?: never
     placeholderTo?: never
     //
-    label: string
+    label?: string
     labelFrom?: never
     labelTo?: never
     helperText?: React.ReactNode
@@ -39,8 +39,8 @@ type CompactRangeProps = {
     placeholderTo?: string
     //
     label?: string
-    labelFrom: string
-    labelTo: string
+    labelFrom?: string
+    labelTo?: string
     helperTextFrom?: React.ReactNode
     helperTextTo?: React.ReactNode
     errorFrom?: boolean
