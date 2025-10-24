@@ -5,6 +5,7 @@
     "language": "en, nb, nb-NO",
     // words - list of words to be always considered correct
     "words": [
+        "ÅÅÅÅ",
         "asma",
         "autodocs",
         "Autosize",

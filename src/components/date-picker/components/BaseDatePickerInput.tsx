@@ -25,6 +25,10 @@ export type IBaseDatePickerInput = {
     hideCalendar?: boolean
     locale?: Locale
     disabledDays?: Matcher | Matcher[]
+    disallowPast?: boolean
+    disallowFuture?: boolean
+    validateOnCalendarClose?: boolean
+    onValidatedOnce?: () => void
 }
 
 export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
@@ -41,48 +45,60 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
     disabledDays,
     label,
     readOnly,
+    disallowPast,
+    disallowFuture,
+    validateOnCalendarClose,
+    onValidatedOnce,
     ...props
 }) => {
-    const { validationError, handleValidation, helperTxt } = useDatePickerValidation()
+    const { validationError, handleValidation, errHelperText } = useDatePickerValidation()
     const { maskRef } = useDatePickerMask()
 
     const [value, setValue] = useState(selected ? getValue(selected, dateFormat) : '')
 
+    const defaultHelper = locale?.code?.startsWith('nb') ? 'DD/MM/ÅÅÅÅ' : 'DD/MM/YYYY'
+    const hasError = !!(validationError || error)
+    const text = hasError ? errorText || errHelperText : formatHelperText(helperText ?? defaultHelper)
+
     useEffect(() => {
         setValue(selected ? getValue(selected, dateFormat) : '')
-        handleValidation({ value: getValue(selected, dateFormat), disabledDays, localeCode: locale?.code })
     }, [selected])
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value
-        setValue(newValue)
-
-        const onlyDigits = newValue.replace(/\D/g, '')
-        const isErrorNow = handleValidation({ value: newValue, disabledDays, localeCode: locale?.code })
-
-        const buildingDate = parse(newValue, 'dd/MM/yyyy', new Date())
-        const isValid = isValidDateFns(buildingDate)
-
-        const parsedDate = isValid ? buildingDate : undefined
-
-        if ((parsedDate && !isErrorNow) || (!parsedDate && !onlyDigits.length)) {
-            onInputChange?.(parsedDate)
-        }
+        setValue(e.target.value)
     }
+
+    useEffect(() => {
+        if (!validateOnCalendarClose) return
+        handleValidation({
+            value,
+            disabledDays,
+            localeCode: locale?.code,
+            disallowPast,
+            disallowFuture,
+        })
+        onValidatedOnce?.()
+    }, [validateOnCalendarClose])
 
     const handleBlur = () => {
-        if (hasError) {
-            setValue('')
-            handleValidation({ value: '' })
-        } else if (selected) {
-            const formatted = getValue(selected, dateFormat)
-            setValue(formatted)
-            handleValidation({ value: formatted, disabledDays, localeCode: locale?.code })
-        }
-    }
+        const isErrorNow = handleValidation({
+            value,
+            disabledDays,
+            localeCode: locale?.code,
+            disallowPast,
+            disallowFuture,
+        })
+        if (isErrorNow) return
 
-    const hasError = !!(validationError || error)
-    const text = hasError ? errorText || helperTxt : formatHelperText(helperText)
+        const onlyDigits = value.replace(/\D/g, '')
+        if (!onlyDigits.length) {
+            onInputChange?.(undefined)
+            return
+        }
+
+        const parsed = parse(value, 'dd/MM/yyyy', new Date())
+        onInputChange?.(isValidDateFns(parsed) ? parsed : undefined)
+    }
 
     if (readOnly)
         return (
@@ -178,7 +194,6 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
         </div>
     )
 }
-
 const formatHelperText = (text: React.ReactNode, maxChars = 75) => {
     if (typeof text !== 'string') return text
     return text.length > maxChars ? `${text.slice(0, maxChars)}…` : text

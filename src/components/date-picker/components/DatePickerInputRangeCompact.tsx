@@ -32,6 +32,9 @@ export const DatePickerInputRangeCompact: React.FC<{
         //
         selected,
         disabledDays,
+        //
+        validateOnCalendarClose,
+        onValidatedOnce,
     } = datePickerProps
 
     return (
@@ -67,6 +70,8 @@ export const DatePickerInputRangeCompact: React.FC<{
                 disabledDays={disabledDays}
                 label={labelFrom}
                 errorText={errorTextFrom}
+                validateOnCalendarClose={validateOnCalendarClose}
+                onValidatedOnce={onValidatedOnce}
             />
             {/* end value */}
             <BaseDatePickerInput
@@ -91,6 +96,8 @@ export const DatePickerInputRangeCompact: React.FC<{
                 locale={locale}
                 label={labelTo}
                 errorText={errorTextTo}
+                validateOnCalendarClose={validateOnCalendarClose}
+                onValidatedOnce={onValidatedOnce}
             />
         </div>
     )

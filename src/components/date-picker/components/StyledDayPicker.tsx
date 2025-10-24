@@ -8,24 +8,39 @@ import { StyledCalendarPickerSelectMonth } from './StyledCalendarPickerSelectMon
 import { StyledCalendarPickerSelectYear } from './StyledCalendarPickerSelectYear'
 import { enGB } from 'date-fns/locale'
 import styles from './StyledCalendarPicker.module.scss'
+import { startOfToday } from 'date-fns'
+import { toArray } from 'lodash-es'
 
 export const StyledDayPicker: React.FC<{
     datePickerProps: DatePickerProps
     popoverProps: PopoverProps
 }> = ({ datePickerProps, popoverProps }) => {
     const { showOutsideDays = true, locale = enGB, selected, numberOfMonths, disabledDays, onClear } = datePickerProps
+
     const { onClose } = popoverProps
+
     const startDate = datePickerProps.mode === 'range' ? datePickerProps.selected?.from : datePickerProps.selected
+
     const [month, setMonth] = useState<Date | undefined>(startDate || new Date(Date.now()))
     const isNb = locale.code === 'nb'
     const isOneMonthView = (numberOfMonths || 1) < 2
+
+    const disallowPast = 'disallowPast' in datePickerProps ? datePickerProps.disallowPast : undefined
+    const disallowFuture = 'disallowFuture' in datePickerProps ? datePickerProps.disallowFuture : undefined
+
+    const today = startOfToday()
+    const disabledMerged = [
+        ...toArray(disabledDays),
+        ...(disallowPast ? [{ before: today }] : []),
+        ...(disallowFuture ? [{ after: today }] : []),
+    ]
 
     const removeSelection = (e: React.MouseEvent) =>
         selected && datePickerProps?.onSelect?.(undefined, new Date(Date.now()), {}, e)
 
     return (
         <DayPicker
-            disabled={disabledDays}
+            disabled={disabledMerged}
             month={month}
             onMonthChange={(e) => {
                 setMonth(e)
@@ -65,7 +80,7 @@ export const StyledDayPicker: React.FC<{
             }}
             components={{
                 Caption: (props: CaptionProps) => (
-                    <CustomCaption {...props} setMonth={setMonth} month={month} isNb={isNb} onClose={onClose}/>
+                    <CustomCaption {...props} setMonth={setMonth} month={month} isNb={isNb} onClose={onClose} />
                 ),
                 Dropdown: (props: DropdownProps) => {
                     return props.name === 'months' ? (

@@ -20,6 +20,10 @@ export const DatePickerInputSingle: React.FC<{
         dataTest,
         readOnly,
         errorText,
+        disallowFuture,
+        disallowPast,
+        validateOnCalendarClose,
+        onValidatedOnce,
     } = datePickerProps
 
     return (
@@ -39,6 +43,10 @@ export const DatePickerInputSingle: React.FC<{
             disabledDays={disabledDays}
             label={label}
             errorText={errorText}
+            disallowFuture={disallowFuture}
+            disallowPast={disallowPast}
+            validateOnCalendarClose={validateOnCalendarClose}
+            onValidatedOnce={onValidatedOnce}
         />
     )
 }

@@ -19,13 +19,15 @@ export const SinglePickerExample: React.FC = () => {
                 onInputChange={(date: Date | undefined) => setDate(date)}
                 placeholder='Placeholder'
                 label='Test Label '
-                disabledDays={{
-                    before: setZeroTime(addDays(new Date(Date.now()), 2)),
-                    after: setMidnightTime(addDays(new Date(Date.now()), 4)),
-                }}
+                // disabledDays={{
+                //     before: setZeroTime(addDays(new Date(Date.now()), 2)),
+                //     after: setMidnightTime(addDays(new Date(Date.now()), 4)),
+                // }}
                 dateFormat='dd.MM.yyyy'
-                helperText='Sorry this is a helper text verry long with some strange words so sorry so its verry long veery long  '
-                errorText='Here is error state '
+                // disallowPast
+                // disallowFuture
+
+                // helperText='Sorry this is a helper text verry long with some strange words so sorry so its verry long veery long dad asdasdasdas das adssadas das  '
             />
             <StyledDatePicker
                 dataTest='StyledDatePicker'

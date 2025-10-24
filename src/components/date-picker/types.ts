@@ -11,6 +11,8 @@ type CommonDatePickerProps = {
     dataTest: string
     hideCalendar?: boolean
     onClear?: () => void
+    validateOnCalendarClose?: boolean
+    onValidatedOnce?: () => void
 } & CalendarProps
 
 type DefaultSingleProps = {
@@ -29,6 +31,8 @@ type DefaultSingleProps = {
     errorText?: React.ReactNode
     allowClear?: boolean
     onInputChange?: (date: Date | undefined) => void
+    disallowPast?: boolean
+    disallowFuture?: boolean
 }
 
 type CompactRangeProps = {
