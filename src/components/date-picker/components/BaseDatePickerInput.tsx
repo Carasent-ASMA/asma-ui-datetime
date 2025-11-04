@@ -8,6 +8,7 @@ import { parse, isValid as isValidDateFns, type Locale } from 'date-fns'
 import type { Matcher } from 'react-day-picker'
 import { OutlineErrorRounded } from 'src/shared-components/OutlineErrorRounded'
 import { cn } from 'src/helpers/cn'
+import { HelperTextWithTooltip } from './HelperTextWithTooltip'
 
 export type IBaseDatePickerInput = {
     dataTest: string
@@ -31,34 +32,36 @@ export type IBaseDatePickerInput = {
     onValidatedOnce?: () => void
 }
 
-export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
-    onClick,
-    inputClassName,
-    dateFormat,
-    selected,
-    error,
-    helperText,
-    errorText,
-    onInputChange,
-    hideCalendar,
-    locale,
-    disabledDays,
-    label,
-    readOnly,
-    disallowPast,
-    disallowFuture,
-    validateOnCalendarClose,
-    onValidatedOnce,
-    ...props
-}) => {
+export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
+    const {
+        onClick,
+        inputClassName,
+        dateFormat,
+        selected,
+        error,
+        helperText,
+        errorText,
+        onInputChange,
+        hideCalendar,
+        locale,
+        disabledDays,
+        label,
+        readOnly,
+        disallowPast,
+        disallowFuture,
+        validateOnCalendarClose,
+        onValidatedOnce,
+        ...rest
+    } = props
+
     const { validationError, handleValidation, errHelperText } = useDatePickerValidation()
     const { maskRef } = useDatePickerMask()
-
     const [value, setValue] = useState(selected ? getValue(selected, dateFormat) : '')
 
     const defaultHelper = locale?.code?.startsWith('nb') ? 'DD/MM/ÅÅÅÅ' : 'DD/MM/YYYY'
     const hasError = !!(validationError || error)
-    const text = hasError ? errorText || errHelperText : formatHelperText(helperText ?? defaultHelper)
+    const rawText = hasError ? errorText || errHelperText : helperText ?? defaultHelper
+    // const rawText = 'lognm text to activate tooltip to see how it will look '
 
     useEffect(() => {
         setValue(selected ? getValue(selected, dateFormat) : '')
@@ -100,37 +103,44 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
         onInputChange?.(isValidDateFns(parsed) ? parsed : undefined)
     }
 
-    if (readOnly)
-        return (
-            <div>
-                {label && <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>}
+    const width = readOnly ? 120 : 160
+    const bottomSpace = 34
 
-                <div className='flex gap-1'>
+    return (
+        <div className='cursor-default'>
+            {label && <div className='pb-1 font-semibold font-roboto text-delta-800'>{label}</div>}
+
+            <div className='flex gap-1 h-[80px]'>
+                <div style={{ width }}>
                     <div className='relative'>
                         <StyledInputField
-                            {...props}
+                            {...rest}
                             readOnly={readOnly}
-                            data-testid={props.dataTest}
+                            data-testid={rest.dataTest}
                             autoComplete='off'
+                            inputRef={!readOnly ? maskRef : undefined}
+                            placeholder={!readOnly ? '  /  /    ' : undefined}
                             size='small'
-                            value={value.replaceAll('/', '.')}
+                            value={readOnly ? value.replaceAll('/', '.') : value}
                             className={inputClassName}
-                            style={{ width: '120px' }}
+                            style={{ width }}
                             error={hasError}
-                            helperText={text}
-                            FormHelperTextProps={{
-                                sx: {
-                                    '&.MuiFormHelperText-root': {
-                                        position: 'absolute',
-                                        bottom: '-24px',
-                                        width: '450px',
-                                    },
-                                },
+                            onBlur={!readOnly ? handleBlur : undefined}
+                            helperText={null}
+                            FormHelperTextProps={{ sx: { m: 0 } }}
+                            inputProps={{
+                                ...(readOnly
+                                    ? {}
+                                    : {
+                                          inputMode: 'numeric',
+                                          style: { fontFamily: 'monospace' },
+                                      }),
                             }}
+                            onChange={onChange}
                         />
                         <div
                             className={cn(
-                                'absolute w-6 h-6 right-2 top-2 flex items-center justify-center',
+                                'absolute w-6 h-6 right-2 top-2 flex items-center justify-center ',
                                 'transform-gpu transition-all duration-300 ease-in-out',
                                 hasError ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
                             )}
@@ -138,63 +148,25 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = ({
                             <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
                         </div>
                     </div>
-                </div>
-            </div>
-        )
 
-    return (
-        <div>
-            {label && <div className='pb-1 font-semibold font-roboto text-delta-800 cursor-default'>{label}</div>}
-
-            <div className='flex gap-1'>
-                <div className='relative'>
-                    <StyledInputField
-                        {...props}
-                        readOnly={readOnly}
-                        data-testid={props.dataTest}
-                        autoComplete='off'
-                        inputRef={maskRef}
-                        placeholder={'  /  /    '}
-                        size='small'
-                        value={value}
-                        className={inputClassName}
-                        style={{ width: '160px' }}
-                        error={hasError}
-                        helperText={text}
-                        onBlur={handleBlur}
-                        FormHelperTextProps={{
-                            sx: {
-                                '&.MuiFormHelperText-root': {
-                                    position: 'absolute',
-                                    bottom: '-24px',
-                                    width: '450px',
-                                },
-                            },
-                        }}
-                        inputProps={{
-                            inputMode: 'numeric',
-                            style: {
-                                fontFamily: 'monospace',
-                            },
-                        }}
-                        onChange={onChange}
-                    />
                     <div
                         className={cn(
-                            'absolute w-6 h-6 right-2 top-2 flex items-center justify-center ',
-                            'transform-gpu transition-all duration-300 ease-in-out',
-                            hasError ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
+                            'pt-1 text-[12px]',
+                            hasError ? 'text-[var(--colors-error-500)]' : 'text-[var(--colors-delta-500)]',
                         )}
+                        style={{
+                            maxWidth: width,
+                            maxHeight: bottomSpace,
+                            lineHeight: '16px',
+                            marginLeft: '16px',
+                        }}
                     >
-                        <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
+                        <HelperTextWithTooltip text={rawText} />
                     </div>
                 </div>
-                {!hideCalendar && !readOnly && <DatePickerButton onClick={onClick} disabled={!!props.disabled} />}
+
+                {!hideCalendar && !readOnly && <DatePickerButton onClick={onClick} disabled={!!rest.disabled} />}
             </div>
         </div>
     )
-}
-const formatHelperText = (text: React.ReactNode, maxChars = 75) => {
-    if (typeof text !== 'string') return text
-    return text.length > maxChars ? `${text.slice(0, maxChars)}…` : text
 }
