@@ -105,12 +105,13 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
 
     const width = readOnly ? 120 : 160
     const bottomSpace = 34
+    const height = readOnly ? 40 : 75
 
     return (
         <div className='cursor-default'>
             {label && <div className='pb-1 font-semibold font-roboto text-delta-800'>{label}</div>}
 
-            <div className='flex gap-1 h-[80px]'>
+            <div className='flex gap-1' style={{ height }}>
                 <div style={{ width }}>
                     <div className='relative'>
                         <StyledInputField
@@ -148,21 +149,22 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
                             <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
                         </div>
                     </div>
-
-                    <div
-                        className={cn(
-                            'pt-1 text-[12px]',
-                            hasError ? 'text-[var(--colors-error-500)]' : 'text-[var(--colors-delta-500)]',
-                        )}
-                        style={{
-                            maxWidth: width,
-                            maxHeight: bottomSpace,
-                            lineHeight: '16px',
-                            marginLeft: '16px',
-                        }}
-                    >
-                        <HelperTextWithTooltip text={rawText} />
-                    </div>
+                    {!readOnly && (
+                        <div
+                            className={cn(
+                                'pt-1 text-[12px]',
+                                hasError ? 'text-[var(--colors-error-500)]' : 'text-delta-600',
+                            )}
+                            style={{
+                                maxWidth: width,
+                                maxHeight: bottomSpace,
+                                lineHeight: '16px',
+                                marginLeft: '16px',
+                            }}
+                        >
+                            <HelperTextWithTooltip text={rawText} />
+                        </div>
+                    )}
                 </div>
 
                 {!hideCalendar && !readOnly && <DatePickerButton onClick={onClick} disabled={!!rest.disabled} />}
