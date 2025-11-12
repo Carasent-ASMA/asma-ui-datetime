@@ -151,10 +151,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
                     </div>
                     {!readOnly && (
                         <div
-                            className={cn(
-                                'pt-1 text-[12px]',
-                                hasError ? 'text-[var(--colors-error-500)]' : 'text-delta-600',
-                            )}
+                            className={cn('pt-1 text-[12px]', hasError ? 'text-error-500' : 'text-delta-600')}
                             style={{
                                 maxWidth: width,
                                 maxHeight: bottomSpace,
