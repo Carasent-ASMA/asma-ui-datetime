@@ -1,4 +1,4 @@
-import { DayPicker, type CaptionProps, type DropdownProps } from 'react-day-picker'
+import { DayPicker, type CaptionProps, type DropdownProps, type ActiveModifiers } from 'react-day-picker'
 import type { DatePickerProps } from '../types'
 import { type PopoverProps } from '@mui/material'
 import { useState } from 'react'
@@ -8,7 +8,7 @@ import { StyledCalendarPickerSelectMonth } from './StyledCalendarPickerSelectMon
 import { StyledCalendarPickerSelectYear } from './StyledCalendarPickerSelectYear'
 import { enGB } from 'date-fns/locale'
 import styles from './StyledCalendarPicker.module.scss'
-import { startOfToday } from 'date-fns'
+import { startOfToday, setMonth as setMonthFn, setYear as setYearFn } from 'date-fns'
 import { toArray } from 'lodash-es'
 
 export const StyledDayPicker: React.FC<{
@@ -38,13 +38,35 @@ export const StyledDayPicker: React.FC<{
     const removeSelection = (e: React.MouseEvent) =>
         selected && datePickerProps?.onSelect?.(undefined, new Date(Date.now()), {}, e)
 
+    const handleMonthChange = (nextMonth: Date) => {
+        setMonth(nextMonth)
+
+        if (!datePickerProps.onSelect) return
+
+        if (!datePickerProps.mode || datePickerProps.mode === 'single') {
+            const currentSelected = datePickerProps.selected
+
+            if (currentSelected instanceof Date) {
+                let newSelectedDate = currentSelected
+
+                newSelectedDate = setYearFn(newSelectedDate, nextMonth.getFullYear())
+                newSelectedDate = setMonthFn(newSelectedDate, nextMonth.getMonth())
+
+                datePickerProps.onSelect(
+                    newSelectedDate,
+                    newSelectedDate,
+                    {} as ActiveModifiers,
+                    {} as React.MouseEvent<Element, MouseEvent>,
+                )
+            }
+        }
+    }
+
     return (
         <DayPicker
             disabled={disabledMerged}
             month={month}
-            onMonthChange={(e) => {
-                setMonth(e)
-            }}
+            onMonthChange={handleMonthChange}
             captionLayout='dropdown'
             weekStartsOn={1}
             locale={locale}
