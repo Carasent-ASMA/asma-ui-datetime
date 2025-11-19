@@ -48,7 +48,9 @@ export const StyledCalendarPickerFooter: React.FC<{
                     variant='outlined'
                     size='small'
                     disabled={!previousMonth}
-                    onClick={() => previousMonth && goToMonth(previousMonth)}
+                    onClick={() => {
+                        previousMonth && setMonth(previousMonth)
+                    }}
                     style={{ minWidth: '25px' }}
                 >
                     <ChevronLeftIcon width={20} height={20} />
@@ -69,7 +71,9 @@ export const StyledCalendarPickerFooter: React.FC<{
                     variant='outlined'
                     size='small'
                     disabled={!nextMonth}
-                    onClick={() => nextMonth && goToMonth(nextMonth)}
+                    onClick={() => {
+                        nextMonth && setMonth(nextMonth)
+                    }}
                     style={{ minWidth: '25px' }}
                 >
                     <ChevronRightIcon width={20} height={20} />
