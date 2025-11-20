@@ -52,6 +52,12 @@
     }
 }
 
+.locale-nb {
+    .head_row > td:first-child::after {
+        content: 'U';
+    }
+}
+
 .head_cell {
     @apply capitalize w-[40px] h-[40px] flex items-center justify-center font-normal;
     color: var(--colors-gray-600);

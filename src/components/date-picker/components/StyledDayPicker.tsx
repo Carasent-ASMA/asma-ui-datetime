@@ -76,7 +76,7 @@ export const StyledDayPicker: React.FC<{
             showWeekNumber
             showOutsideDays={showOutsideDays}
             fixedWeeks
-            className={styles['styled-calendar-day-picker']}
+            className={`${styles['styled-calendar-day-picker']} ${isNb ? styles['locale-nb'] : ''}`}
             classNames={{
                 months: styles['months'],
                 weeknumber: styles['weeknumber'],
