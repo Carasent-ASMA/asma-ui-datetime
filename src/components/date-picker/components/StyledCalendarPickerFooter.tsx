@@ -16,7 +16,7 @@ export const StyledCalendarPickerFooter: React.FC<{
     month: Date | undefined
     setMonth: Dispatch<SetStateAction<Date | undefined>>
 }> = ({ onClose, isNb, selected, removeSelection, setMonth, onClear }) => {
-    const { goToMonth, nextMonth, previousMonth } = useNavigation()
+    const { nextMonth, previousMonth } = useNavigation()
 
     const eraserDisabled = isArray(selected)
         ? !selected.length

@@ -41,7 +41,5 @@
         "img",
         "*.backup"
     ],
-    "ignoreRegExpList": [
-        "enum.*"
-    ]
+    "ignoreRegExpList": ["enum.*"]
 }

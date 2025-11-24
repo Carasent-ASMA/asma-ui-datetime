@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.0.66",
+    "version": "0.0.67",
     "type": "module",
     "files": [
         "dist/**/*"
@@ -25,9 +25,10 @@
         "dev": "vite",
         "build": "npx tsc && rm -rf ./dist && vite build",
         "preview": "vite preview",
-        "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
         "version": "echo $npm_package_version",
-        "lint:fix": "eslint --fix src/**/*.{jsx,ts,tsx}",
+        "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
+        "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
+        "lint": "pnpm lint:format && pnpm lint:fix ",
         "prettier": "prettier --write src//**/*.{ts,tsx,scss} --config ./.prettierrc",
         "storybook": "storybook dev -p 6006",
         "storybook:no-browser": "storybook dev -p 6006 --no-open",

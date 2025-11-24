@@ -8,7 +8,7 @@ import { StyledCalendarPickerSelectMonth } from './StyledCalendarPickerSelectMon
 import { StyledCalendarPickerSelectYear } from './StyledCalendarPickerSelectYear'
 import { enGB } from 'date-fns/locale'
 import styles from './StyledCalendarPicker.module.scss'
-import { startOfToday, setMonth as setMonthFn, setYear as setYearFn } from 'date-fns'
+import { startOfToday, endOfMonth } from 'date-fns'
 import { toArray } from 'lodash-es'
 
 export const StyledDayPicker: React.FC<{
@@ -47,10 +47,15 @@ export const StyledDayPicker: React.FC<{
             const currentSelected = datePickerProps.selected
 
             if (currentSelected instanceof Date) {
-                let newSelectedDate = currentSelected
+                const year = nextMonth.getFullYear()
+                const monthIndex = nextMonth.getMonth()
+                const day = currentSelected.getDate()
 
-                newSelectedDate = setYearFn(newSelectedDate, nextMonth.getFullYear())
-                newSelectedDate = setMonthFn(newSelectedDate, nextMonth.getMonth())
+                const lastDayOfTargetMonth = endOfMonth(new Date(year, monthIndex, 1)).getDate()
+                const safeDay = Math.min(day, lastDayOfTargetMonth)
+
+                const newSelectedDate = new Date(currentSelected)
+                newSelectedDate.setFullYear(year, monthIndex, safeDay)
 
                 datePickerProps.onSelect(
                     newSelectedDate,
