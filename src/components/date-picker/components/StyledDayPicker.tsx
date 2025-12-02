@@ -18,11 +18,10 @@ export const StyledDayPicker: React.FC<{
     const {
         showOutsideDays = true,
         locale = enGB,
-        selected,
         numberOfMonths,
         disabledDays,
         onClear,
-        title, // consume it here if you remove calendar picker will have tooltip with this title 
+        title, // consume it here if you remove calendar picker will have tooltip with this title
         ...dayPickerPropsRest
     } = datePickerProps
 
@@ -41,7 +40,7 @@ export const StyledDayPicker: React.FC<{
     const disabledMerged = buildDisabled(disabledDays, disallowPast, disallowFuture, today)
 
     const removeSelection = (e: React.MouseEvent) =>
-        selected && datePickerProps?.onSelect?.(undefined, new Date(), {}, e)
+        datePickerProps.selected && datePickerProps?.onSelect?.(undefined, new Date(), {}, e)
 
     const handleMonthChange = (nextMonth: Date) => {
         setMonth(nextMonth)
@@ -126,7 +125,7 @@ export const StyledDayPicker: React.FC<{
                 <StyledCalendarPickerFooter
                     onClose={onClose}
                     isNb={isNb}
-                    selected={selected}
+                    selected={datePickerProps.selected}
                     removeSelection={removeSelection}
                     setMonth={setMonth}
                     month={month}
