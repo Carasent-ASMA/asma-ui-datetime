@@ -15,47 +15,40 @@ type CommonDatePickerProps = {
     onValidatedOnce?: () => void
 } & CalendarProps
 
-type DefaultSingleProps = {
-    mode: 'single'
-    compact?: never
-    //
-    placeholder?: string
-    placeholderFrom?: never
-    placeholderTo?: never
-    //
+export type DatePickerSingleFieldProps = {
     label?: string
-    labelFrom?: never
-    labelTo?: never
+    title?: string
     helperText?: React.ReactNode
     error?: boolean
     errorText?: React.ReactNode
-    allowClear?: boolean
+    placeholder?: string
     onInputChange?: (date: Date | undefined) => void
     disallowPast?: boolean
     disallowFuture?: boolean
+    hideDefaultHelperText?: boolean
 }
 
-type CompactRangeProps = {
-    mode: 'range'
-    //
-    placeholder?: never
-    placeholderFrom?: string
-    placeholderTo?: string
-    //
-    label?: string
+export type DatePickerRangeFieldProps = {
     labelFrom?: string
     labelTo?: string
+    titleFrom?: string
+    titleTo?: string
     helperTextFrom?: React.ReactNode
     helperTextTo?: React.ReactNode
     errorFrom?: boolean
     errorTo?: boolean
     errorTextFrom?: React.ReactNode
     errorTextTo?: React.ReactNode
+    placeholderFrom?: string
+    placeholderTo?: string
+    hideDefaultHelperTextFrom?: boolean
+    hideDefaultHelperTextTo?: boolean
     onInputChange?: ({ from, to }: { from: Date | undefined; to: Date | undefined }) => void
 }
 
-export type DatePickerProps = CommonDatePickerProps & (CompactRangeProps | DefaultSingleProps)
+export type DatePickerProps =
+    | (CommonDatePickerProps & { mode: 'single' } & DatePickerSingleFieldProps)
+    | (CommonDatePickerProps & { mode: 'range' } & DatePickerRangeFieldProps)
 
-export type IDatePickerRange = CommonDatePickerProps & CompactRangeProps
-
-export type IDatePickerSingle = CommonDatePickerProps & DefaultSingleProps
+export type IDatePickerRange = CommonDatePickerProps & { mode: 'range' } & DatePickerRangeFieldProps
+export type IDatePickerSingle = CommonDatePickerProps & { mode: 'single' } & DatePickerSingleFieldProps

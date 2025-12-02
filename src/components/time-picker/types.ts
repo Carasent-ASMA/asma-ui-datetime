@@ -14,7 +14,7 @@ export type StyledTimePickerProps = {
     helperText?: ReactNode
     label?: string
     locale?: 'no' | 'en'
-    name?: string
+    title?: string
 }
 
 export type IPopupStateType = ReturnType<typeof PopupState>

@@ -17,14 +17,16 @@ export const SinglePickerExample: React.FC = () => {
                     setDate(e)
                 }}
                 onInputChange={(date: Date | undefined) => setDate(date)}
-                placeholder='Placeholder'
                 label='Test Label '
+                title='Test title '
                 // disabledDays={{
                 //     before: setZeroTime(addDays(new Date(Date.now()), 2)),
                 //     after: setMidnightTime(addDays(new Date(Date.now()), 4)),
                 // }}
+                disabledDays={[new Date(2025, 11, 4), new Date(2025, 11, 6), new Date(2025, 11, 24)]}
                 dateFormat='dd.MM.yyyy'
-                // disallowPast
+                hideDefaultHelperText
+                //   disallowPast
                 // disallowFuture
 
                 // helperText='Sorry this is a helper text verry long with some strange words so sorry so its verry long veery long dad asdasdasdas das adssadas das  '
@@ -38,12 +40,9 @@ export const SinglePickerExample: React.FC = () => {
                     setDate(e)
                 }}
                 onInputChange={(date: Date | undefined) => setDate(date)}
-                placeholder='Placeholder'
                 label='Test Label '
-                disabled
                 disabledDays={{
                     before: setZeroTime(addDays(new Date(Date.now()), 2)),
-                    after: setMidnightTime(addDays(new Date(Date.now()), 4)),
                 }}
                 dateFormat='dd.MM.yyyy'
             />
@@ -57,7 +56,6 @@ export const SinglePickerExample: React.FC = () => {
                 }}
                 readOnly
                 onInputChange={(date: Date | undefined) => setDate(date)}
-                placeholder='Placeholder'
                 label='Test Label '
                 disabledDays={{
                     before: setZeroTime(addDays(new Date(Date.now()), 2)),

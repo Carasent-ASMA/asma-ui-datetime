@@ -18,23 +18,11 @@ export const DatePickerInputRangeCompact: React.FC<{
         onInputChange,
         hideCalendar,
         locale,
-
-        //
-        labelFrom,
-        errorFrom,
-        helperTextFrom,
-        errorTextFrom,
-        //
-        labelTo,
-        errorTo,
-        helperTextTo,
-        errorTextTo,
-        //
         selected,
         disabledDays,
-        //
         validateOnCalendarClose,
         onValidatedOnce,
+        ...rangeFieldProps
     } = datePickerProps
 
     return (
@@ -49,14 +37,11 @@ export const DatePickerInputRangeCompact: React.FC<{
             {/* start value */}
             <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-from'
-                data-testid='styled-date-picker-input-range-from'
                 dateFormat={dateFormat}
                 selected={selected?.from}
                 inputClassName={inputClassName}
                 readOnly={readOnly}
                 disabled={!!disabled}
-                error={errorFrom}
-                helperText={helperTextFrom}
                 onClick={onClick}
                 onInputChange={(date?: Date) => {
                     if (date && selected?.to && date.getTime() > selected?.to.getTime()) {
@@ -68,22 +53,23 @@ export const DatePickerInputRangeCompact: React.FC<{
                 hideCalendar={hideCalendar}
                 locale={locale}
                 disabledDays={disabledDays}
-                label={labelFrom}
-                errorText={errorTextFrom}
                 validateOnCalendarClose={validateOnCalendarClose}
                 onValidatedOnce={onValidatedOnce}
+                // spread "from" field props
+                label={rangeFieldProps.labelFrom}
+                error={rangeFieldProps.errorFrom}
+                helperText={rangeFieldProps.helperTextFrom}
+                errorText={rangeFieldProps.errorTextFrom}
+                title={rangeFieldProps.titleFrom}
+                hideDefaultHelperText={rangeFieldProps.hideDefaultHelperTextFrom}
             />
-            {/* end value */}
             <BaseDatePickerInput
                 dataTest='styled-date-picker-input-range-to'
-                data-testid='styled-date-picker-input-range-to'
                 dateFormat={dateFormat}
                 selected={selected?.to}
                 inputClassName={inputClassName}
-                disabled={!!disabled}
                 readOnly={readOnly}
-                error={errorTo}
-                helperText={helperTextTo}
+                disabled={!!disabled}
                 onClick={onClick}
                 onInputChange={(date?: Date) => {
                     if (date && selected?.from && date.getTime() < selected?.from.getTime()) {
@@ -94,10 +80,15 @@ export const DatePickerInputRangeCompact: React.FC<{
                 }}
                 hideCalendar={hideCalendar}
                 locale={locale}
-                label={labelTo}
-                errorText={errorTextTo}
+                disabledDays={disabledDays}
                 validateOnCalendarClose={validateOnCalendarClose}
                 onValidatedOnce={onValidatedOnce}
+                label={rangeFieldProps.labelTo}
+                error={rangeFieldProps.errorTo}
+                helperText={rangeFieldProps.helperTextTo}
+                errorText={rangeFieldProps.errorTextTo}
+                title={rangeFieldProps.titleTo}
+                hideDefaultHelperText={rangeFieldProps.hideDefaultHelperTextTo}
             />
         </div>
     )

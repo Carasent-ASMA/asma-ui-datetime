@@ -18,7 +18,14 @@ export const TimePicker = () => {
     return (
         <div className='flex-col' style={{ display: 'flex', width: '100%', gap: '20px' }}>
             <div className='w-fit gap-7 flex'>
-                <StyledTimePicker dataTest='test' value={value} onSelect={setValue} label='Time' placeholder='Time' />
+                <StyledTimePicker
+                    dataTest='test'
+                    value={value}
+                    onSelect={setValue}
+                    label='Time'
+                    placeholder='Time'
+                    helperText={'haha'}
+                />
                 <StyledTimePicker
                     dataTest='test'
                     value={value}
@@ -28,6 +35,7 @@ export const TimePicker = () => {
                     label='Time'
                     placeholder='Time'
                     locale={'no'}
+                    title='some title '
                 />
                 <StyledTimePicker
                     dataTest='test'

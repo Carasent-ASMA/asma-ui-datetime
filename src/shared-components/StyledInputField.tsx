@@ -1,5 +1,4 @@
 import { TextField, type TextFieldProps } from '@mui/material'
-import { CloseIcon } from './CloseIcon'
 /**
  *
  * @inputRef
@@ -9,35 +8,15 @@ import { CloseIcon } from './CloseIcon'
  */
 export const StyledInputField: React.FC<
     TextFieldProps & {
-        allowClear?: boolean
-        onClear?: () => void
         readOnly?: boolean
         dataTest: string
     }
-> = ({ allowClear, onClear, readOnly, disabled, dataTest, ...props }) => (
+> = ({ readOnly, disabled, dataTest, ...props }) => (
     <TextField
         {...props}
         data-test={dataTest}
         disabled={disabled || readOnly}
         type={props.type || 'mui-input'}
-        InputProps={
-            allowClear && props.value
-                ? {
-                      endAdornment: (
-                          <div
-                              className='z-40 hover:bg-gama-100 duration-300 absolute right-4 p-[2px] rounded-full flex items-center justify-center'
-                              onClick={(e) => {
-                                  e.stopPropagation()
-                                  e.preventDefault()
-                                  onClear?.()
-                              }}
-                          >
-                              <CloseIcon width={18} height={18} />
-                          </div>
-                      ),
-                  }
-                : props.InputProps
-        }
         sx={{
             '& input:-webkit-autofill, & .MuiInputBase-root:has(> input:-webkit-autofill)': {
                 backgroundColor: '#e8f0fe !important',

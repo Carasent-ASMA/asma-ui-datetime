@@ -12,24 +12,27 @@ import { HelperTextWithTooltip } from './HelperTextWithTooltip'
 
 export type IBaseDatePickerInput = {
     dataTest: string
-    label?: string
     inputClassName?: string
     disabled: boolean
     readOnly?: boolean
-    helperText: React.ReactNode
-    errorText: React.ReactNode
     onClick: (e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => void
     selected: Date | undefined
     dateFormat?: string
-    error?: boolean
-    onInputChange?: (date?: Date) => void
     hideCalendar?: boolean
     locale?: Locale
     disabledDays?: Matcher | Matcher[]
-    disallowPast?: boolean
-    disallowFuture?: boolean
     validateOnCalendarClose?: boolean
     onValidatedOnce?: () => void
+    // Field config
+    label?: string
+    title?: string
+    helperText?: React.ReactNode
+    errorText?: React.ReactNode
+    error?: boolean
+    onInputChange?: (date?: Date) => void
+    disallowPast?: boolean
+    disallowFuture?: boolean
+    hideDefaultHelperText?: boolean
 }
 
 export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
@@ -46,11 +49,13 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
         locale,
         disabledDays,
         label,
+        title,
         readOnly,
         disallowPast,
         disallowFuture,
         validateOnCalendarClose,
         onValidatedOnce,
+        hideDefaultHelperText,
         ...rest
     } = props
 
@@ -59,16 +64,22 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
     const [value, setValue] = useState(selected ? getValue(selected, dateFormat) : '')
 
     const defaultHelper = locale?.code?.startsWith('nb') ? 'DD/MM/ÅÅÅÅ' : 'DD/MM/YYYY'
+    const effectiveDefaultHelper = hideDefaultHelperText ? undefined : defaultHelper
+
     const hasError = !!(validationError || error)
-    const rawText = hasError ? errorText || errHelperText : helperText ?? defaultHelper
-    // const rawText = 'lognm text to activate tooltip to see how it will look '
+    const rawText = hasError ? errorText || errHelperText : helperText ?? effectiveDefaultHelper
 
     useEffect(() => {
         setValue(selected ? getValue(selected, dateFormat) : '')
     }, [selected])
 
+    const digits = value.replace(/\D/g, '')
+    const hasDigits = digits.length > 0
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
+        const raw = e.target.value
+        const onlyDigits = raw.replace(/\D/g, '')
+        setValue(onlyDigits.length ? raw : '')
     }
 
     useEffect(() => {
@@ -109,18 +120,19 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
 
     return (
         <div className='cursor-default'>
-            {label && <div className='pb-1 font-semibold font-roboto text-delta-800'>{label}</div>}
+            {title && <div className='pb-1 font-semibold font-roboto text-delta-800'>{title}</div>}
 
             <div className='flex gap-1' style={{ height }}>
                 <div style={{ width }}>
                     <div className='relative'>
                         <StyledInputField
                             {...rest}
+                            label={label}
                             readOnly={readOnly}
                             data-testid={rest.dataTest}
                             autoComplete='off'
                             inputRef={!readOnly ? maskRef : undefined}
-                            placeholder={!readOnly ? '  /  /    ' : undefined}
+                            placeholder={!readOnly && !hasDigits ? '  /  /    ' : undefined}
                             size='small'
                             value={readOnly ? value.replaceAll('/', '.') : value}
                             className={inputClassName}

@@ -13,8 +13,6 @@ export const RangePickerExample: React.FC = () => {
                 mode='range'
                 dataTest='range-picker-example'
                 locale={nb}
-                placeholderFrom='Fra'
-                placeholderTo='Til'
                 labelFrom='Start date '
                 labelTo='End date '
                 selected={rangeCompact}
@@ -40,8 +38,6 @@ export const RangePickerExample: React.FC = () => {
                 mode='range'
                 dataTest='range-picker-example'
                 locale={nb}
-                placeholderFrom='Fra'
-                placeholderTo='Til'
                 labelFrom='Start date '
                 labelTo='End date '
                 selected={rangeCompact}
@@ -68,8 +64,6 @@ export const RangePickerExample: React.FC = () => {
                 mode='range'
                 dataTest='range-picker-example'
                 locale={nb}
-                placeholderFrom='Fra'
-                placeholderTo='Til'
                 labelFrom='Start date '
                 labelTo='End date '
                 readOnly

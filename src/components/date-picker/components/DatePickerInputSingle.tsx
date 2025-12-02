@@ -10,8 +10,6 @@ export const DatePickerInputSingle: React.FC<{
         disabled,
         helperText,
         label,
-        onInputChange,
-        selected,
         error,
         locale,
         hideCalendar,
@@ -24,6 +22,10 @@ export const DatePickerInputSingle: React.FC<{
         disallowPast,
         validateOnCalendarClose,
         onValidatedOnce,
+        onInputChange,
+        selected,
+        title,
+        hideDefaultHelperText,
     } = datePickerProps
 
     return (
@@ -47,6 +49,8 @@ export const DatePickerInputSingle: React.FC<{
             disallowPast={disallowPast}
             validateOnCalendarClose={validateOnCalendarClose}
             onValidatedOnce={onValidatedOnce}
+            title={title}
+            hideDefaultHelperText={hideDefaultHelperText}
         />
     )
 }

@@ -1,7 +1,7 @@
 import { parse, isValid as isValidDateFns, startOfDay } from 'date-fns'
 import { useState } from 'react'
 import type { Matcher } from 'react-day-picker'
-import { isDisabledDate } from '../helpers'
+import { buildDisabled, isDisabledDate } from '../helpers'
 
 const msgs = {
     en: {
@@ -25,21 +25,6 @@ const msgs = {
         futureNotAllowed: 'Dato i fremtiden er ikke tillatt',
     },
 } as const
-
-const isValidDate = (dateString: string) => {
-    const [day, month, year] = dateString.split('/').map(Number)
-    if (!day || !month || !year) return false
-    const date = new Date(year, month - 1, day)
-    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
-}
-
-const splitParts = (value: string) => {
-    const [rawD = '', rawM = '', rawY = ''] = value.split('/')
-    const d = rawD.replace(/\s/g, '')
-    const m = rawM.replace(/\s/g, '')
-    const y = rawY.replace(/\s/g, '')
-    return [d, m, y] as const
-}
 
 const formatRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/
 export const useDatePickerValidation = () => {
@@ -127,24 +112,10 @@ export const useDatePickerValidation = () => {
             return true
         }
 
-        // 5) Optional past/future date di
-        const today = startOfDay(new Date())
-        const candidate = startOfDay(parsed)
-        if (disallowPast && candidate < today) {
-            setError(true)
-            setErrHelperText(msgs[lang].pastNotAllowed)
-            setDisabled(false)
-            return true
-        }
-        if (disallowFuture && candidate > today) {
-            setError(true)
-            setErrHelperText(msgs[lang].futureNotAllowed)
-            setDisabled(false)
-            return true
-        }
-
-        if (disabledDays) {
-            const policyHit = isDisabledDate({ parsedDate: parsed, disabledDays })
+        // 5) check disabled date 
+        const mergedDisabled = buildDisabled(disabledDays, disallowPast, disallowFuture)
+        if (mergedDisabled.length) {
+            const policyHit = isDisabledDate({ parsedDate: parsed, disabledDays: mergedDisabled })
             setDisabled(policyHit)
             if (policyHit) {
                 setErrHelperText(msgs[lang].dateDisabled)

@@ -17,10 +17,9 @@ import { CloseIcon } from './CloseIcon'
  */
 export const StyledSelect: React.FC<
     SelectProps & {
-        allowClear?: boolean
         dataTest: string
     }
-> = ({ dataTest, allowClear, ...props }) => (
+> = ({ dataTest, ...props }) => (
     <Select
         {...props}
         data-test={dataTest}
@@ -28,18 +27,6 @@ export const StyledSelect: React.FC<
         IconComponent={(props) => (
             <ExpandIcon {...props} width={24} height={24} className={clsx(props.className, 'select-custom-icon')} />
         )}
-        endAdornment={
-            allowClear && props.value ? (
-                <div
-                    className='hover:bg-gama-100 duration-300 absolute right-8 p-[2px] rounded-full flex items-center justify-center'
-                    onClick={() => {
-                        props.onChange?.({ target: { value: '' } } as SelectChangeEvent<unknown>, null)
-                    }}
-                >
-                    <CloseIcon width={18} height={18} />
-                </div>
-            ) : null
-        }
         sx={{
             '.MuiOutlinedInput-notchedOutline': {
                 borderColor: 'var(--colors-delta-500) !important',

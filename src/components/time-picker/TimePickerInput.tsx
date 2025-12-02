@@ -28,7 +28,7 @@ export const TimePickerInput: React.FC<
         handleChange,
         isValidTime,
         localValue,
-        name,
+        title,
         readOnly,
     } = props
 
@@ -39,50 +39,53 @@ export const TimePickerInput: React.FC<
         },
         showMask: false,
     })
+
     return (
-        <StyledInputField
-            inputRef={inputRef}
-            name={name}
-            autoComplete='off'
-            type='text'
-            dataTest={dataTest}
-            data-testid={dataTest}
-            placeholder={placeholder}
-            size='small'
-            error={!isValidTime || error}
-            helperText={
-                <HelperText isValidTime={isValidTime} error={error} localization={locale} helperText={helperText} />
-            }
-            onChange={handleChange}
-            InputProps={{
-                endAdornment: (
-                    <ClockOutlineIcon
-                        width={24}
-                        height={24}
-                        onClick={() => !disabled && !readOnly && popupState.open()}
-                    />
-                ),
-            }}
-            value={localValue}
-            sx={{
-                height: 40,
-                maxWidth: width || 130,
-                width,
-                minWidth: width,
-                '& .MuiFormControl-root': {
-                    height: '40px', // Custom height for the FormControl
-                },
-                '& .MuiInputBase-root': {
-                    height: '40px', // Custom height for the input element
-                },
-                '& .MuiOutlinedInput-root': {
-                    height: '40px', // Ensure the outlined variant has the correct height
-                },
-            }}
-            disabled={disabled}
-            readOnly={readOnly}
-            className={inputClassName}
-            label={label}
-        />
+        <div>
+            {title && <div className='pb-1 font-semibold font-roboto text-delta-800'>{title}</div>}
+            <StyledInputField
+                inputRef={inputRef}
+                autoComplete='off'
+                type='text'
+                dataTest={dataTest}
+                data-testid={dataTest}
+                placeholder={placeholder}
+                size='small'
+                error={!isValidTime || error}
+                helperText={
+                    <HelperText isValidTime={isValidTime} error={error} localization={locale} helperText={helperText} />
+                }
+                onChange={handleChange}
+                InputProps={{
+                    endAdornment: (
+                        <ClockOutlineIcon
+                            width={24}
+                            height={24}
+                            onClick={() => !disabled && !readOnly && popupState.open()}
+                        />
+                    ),
+                }}
+                value={localValue}
+                sx={{
+                    height: 40,
+                    maxWidth: width || 130,
+                    width,
+                    minWidth: width,
+                    '& .MuiFormControl-root': {
+                        height: '40px', // Custom height for the FormControl
+                    },
+                    '& .MuiInputBase-root': {
+                        height: '40px', // Custom height for the input element
+                    },
+                    '& .MuiOutlinedInput-root': {
+                        height: '40px', // Ensure the outlined variant has the correct height
+                    },
+                }}
+                disabled={disabled}
+                readOnly={readOnly}
+                className={inputClassName}
+                label={label}
+            />
+        </div>
     )
 }
