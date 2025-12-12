@@ -6,7 +6,6 @@ import { getValue } from '../helpers'
 import { useDatePickerValidation } from '../hooks/useDatePickerValidation'
 import { parse, isValid as isValidDateFns, type Locale } from 'date-fns'
 import type { Matcher } from 'react-day-picker'
-import { OutlineErrorRounded } from 'src/shared-components/OutlineErrorRounded'
 import { cn } from 'src/helpers/cn'
 import { HelperTextWithTooltip } from './HelperTextWithTooltip'
 
@@ -151,27 +150,17 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
                             }}
                             onChange={onChange}
                         />
-                        <div
-                            className={cn(
-                                'absolute w-6 h-6 right-2 top-2 flex items-center justify-center ',
-                                'transform-gpu transition-all duration-300 ease-in-out',
-                                hasError ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none',
-                            )}
-                        >
-                            <OutlineErrorRounded width={20} height={20} color={'var(--colors-error-500)'} />
-                        </div>
                     </div>
                     {!readOnly && (
                         <div
-                            className={cn('pt-1 text-[12px]', hasError ? 'text-error-500' : 'text-delta-600')}
+                            className={cn('pt-1 text-[14px]', hasError ? 'text-error-500' : 'text-delta-600')}
                             style={{
                                 maxWidth: width,
                                 maxHeight: bottomSpace,
                                 lineHeight: '16px',
-                                marginLeft: '16px',
                             }}
                         >
-                            <HelperTextWithTooltip text={rawText} />
+                            <HelperTextWithTooltip text={rawText} hasError={hasError} />
                         </div>
                     )}
                 </div>
