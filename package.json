@@ -3,7 +3,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "version": "0.0.71",
+    "version": "0.0.72",
     "type": "module",
     "files": [
         "dist/**/*"
@@ -19,7 +19,8 @@
                 "types": "./dist/index.d.ts",
                 "default": "./dist/asma-ui-datetime.es.js"
             }
-        }
+        },
+        "./dist/style.css": "./dist/style.css"
     },
     "scripts": {
         "dev": "vite",
