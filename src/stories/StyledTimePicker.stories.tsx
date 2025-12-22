@@ -59,6 +59,8 @@ export const TimePicker = () => {
                 <div className='flex gap-5'>
                     <StyledTimePicker
                         dataTest='test'
+                        error={!value}
+                        helperText={!value && 'Required'}
                         value={value}
                         onSelect={(date) => {
                             setValue(date)
@@ -70,6 +72,8 @@ export const TimePicker = () => {
                     />
                     <StyledTimePicker
                         dataTest='test'
+                        error={!value2}
+                        helperText={!value2 && 'Required'}
                         value={value2}
                         onSelect={setValue2}
                         label='Time'

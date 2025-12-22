@@ -52,8 +52,12 @@ export const StyledInputField: React.FC<
             '& .MuiInputBase-colorPrimary.Mui-error:hover fieldset': {
                 borderColor: 'var(--colors-error-500) !important',
             },
-            '& .MuiInputBase-colorPrimary.Mui-focused.Mui-error fieldset': {
-                borderColor: '#d3302f !important',
+            '& .MuiFormHelperText-root': {
+                fontSize: '14px',
+            },
+            '& .MuiFormHelperText-root.Mui-error': {
+                color: 'var(--colors-error-500) !important',
+                marginLeft: 0,
             },
             '& .MuiInputBase-colorPrimary.Mui-disabled fieldset': {
                 borderColor: 'var(--colors-delta-300) !important',
@@ -62,7 +66,7 @@ export const StyledInputField: React.FC<
                 color: 'var(--colors-gama-500) !important',
             },
             '& label.Mui-focused.Mui-error': {
-                color: '#d3302f !important',
+                color: 'var(--colors-error-500) !important',
             },
             '& label.Mui-disabled': {
                 color: 'var(--colors-delta-300) !important',
