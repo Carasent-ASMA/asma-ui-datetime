@@ -41,7 +41,7 @@ export const TimePickerInput: React.FC<
     })
 
     return (
-        <div style={{ height: readOnly ? '40px' : '70px' }}>
+        <div style={{ height: readOnly ? '40px' : '75px' }}>
             {title && <div className='pb-1 font-semibold font-roboto text-delta-800'>{title}</div>}
             <StyledInputField
                 inputRef={inputRef}
