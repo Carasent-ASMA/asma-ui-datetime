@@ -9,33 +9,28 @@ export const HelperTextWithTooltip = ({ text, hasError }: { text: React.ReactNod
     const maxLength = hasError ? 35 : 40
     const isTrimmed = text.length > maxLength
     const displayed = isTrimmed ? text.slice(0, maxLength) + '…' : text
-    
-    const content = (
-        <span
-            style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                lineHeight: '16px',
-                maxHeight: 32,
-                wordBreak: 'break-word',
-                fontFamily: 'roboto, sans-serif',
-            }}
-        >
-            {displayed}
-        </span>
-    )
 
     const helper = (
-        <div className='flex gap-1'>
+        <div className='flex items-start gap-1'>
             <div className={cn('flex', 'transform-gpu transition-all duration-300 ease-in-out')}>
                 {hasError && <OutlineErrorRounded width={20} height={20} color='var(--colors-error-500)' />}
             </div>
-            {content}
+
+            <span
+                className='flex-1 text-left leading-4 break-words pt-[2px]'
+                style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    maxHeight: 32,
+                    fontFamily: 'roboto, sans-serif',
+                }}
+            >
+                {displayed}
+            </span>
         </div>
     )
-
     if (!isTrimmed) return helper
 
     return (
