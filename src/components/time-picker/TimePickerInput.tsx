@@ -1,7 +1,7 @@
 import type { StyledTimePickerProps } from './types'
 import { type PopupState } from 'material-ui-popup-state/hooks'
 import { HelperText } from './components/HelperText'
-import type { ChangeEvent } from 'react'
+import { useRef, type ChangeEvent, useEffect, type MouseEvent as ReactMouseEvent } from 'react'
 import { StyledInputField } from 'src/shared-components/StyledInputField'
 import { ClockOutlineIcon } from 'src/shared-components/ClockOutlineIcon'
 import { useMask } from '@react-input/mask'
@@ -11,6 +11,7 @@ export const TimePickerInput: React.FC<
         popupState: PopupState
         handleChange: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
         isValidTime: boolean
+        isValidEndTime: boolean
         localValue: string
     }
 > = (props) => {
@@ -27,6 +28,7 @@ export const TimePickerInput: React.FC<
         popupState,
         handleChange,
         isValidTime,
+        isValidEndTime,
         localValue,
         title,
         readOnly,
@@ -40,6 +42,13 @@ export const TimePickerInput: React.FC<
         showMask: false,
     })
 
+    const hasError = !isValidTime || !isValidEndTime || !!error
+    const inputRootRef = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        if (inputRootRef.current) popupState.setAnchorEl(inputRootRef.current)
+    }, [popupState])
+
     return (
         <div style={{ height: readOnly ? '40px' : '75px' }}>
             {title && <div className='pb-1 font-semibold font-roboto text-delta-800'>{title}</div>}
@@ -51,17 +60,30 @@ export const TimePickerInput: React.FC<
                 data-testid={dataTest}
                 placeholder={placeholder}
                 size='small'
-                error={!isValidTime || error}
+                error={hasError}
                 helperText={
-                    <HelperText isValidTime={isValidTime} error={error} localization={locale} helperText={helperText} />
+                    <HelperText
+                        isValidTime={isValidTime}
+                        isValidEndTime={isValidEndTime}
+                        error={hasError}
+                        localization={locale}
+                        helperText={helperText}
+                    />
                 }
                 onChange={handleChange}
                 InputProps={{
+                    ref: inputRootRef,
+                    onMouseDown: (e: ReactMouseEvent<HTMLElement>) => {
+                        if (!disabled && !readOnly) popupState.open(e)
+                    },
                     endAdornment: (
                         <ClockOutlineIcon
                             width={24}
                             height={24}
-                            onClick={() => !disabled && !readOnly && popupState.open()}
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                if (!disabled && !readOnly) popupState.open(e)
+                            }}
                         />
                     ),
                 }}

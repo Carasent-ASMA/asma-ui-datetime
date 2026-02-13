@@ -18,7 +18,7 @@ export const DateTimeComponents = () => {
     const [timeVal, setTimeVal] = useState<Date>()
 
     return (
-        <div className='flex gap-5'>
+        <div className='flex gap-5 h-[500px] items-center'>
             <StyledDatePicker
                 mode='single'
                 label='Label'
