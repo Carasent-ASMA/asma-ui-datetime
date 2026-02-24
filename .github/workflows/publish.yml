@@ -9,6 +9,6 @@ jobs:
     publish:
         uses: Carasent-ASMA/asma-modules/.github/workflows/reusable-publish.yml@master
         with:
-            publish_npm: true
+            publish_npm: false
             package_name: "asma-ui-datetime"
         secrets: inherit
