@@ -32,6 +32,7 @@ export type IBaseDatePickerInput = {
     disallowPast?: boolean
     disallowFuture?: boolean
     hideDefaultHelperText?: boolean
+    required?: boolean
 }
 
 export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
@@ -55,6 +56,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
         validateOnCalendarClose,
         onValidatedOnce,
         hideDefaultHelperText,
+        required,
         ...rest
     } = props
 
@@ -89,9 +91,20 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
             localeCode: locale?.code,
             disallowPast,
             disallowFuture,
+            required,
         })
         onValidatedOnce?.()
-    }, [validateOnCalendarClose])
+    }, [
+        validateOnCalendarClose,
+        value,
+        disabledDays,
+        locale?.code,
+        disallowPast,
+        disallowFuture,
+        required,
+        onValidatedOnce,
+        handleValidation,
+    ])
 
     const handleBlur = () => {
         const isErrorNow = handleValidation({
@@ -100,6 +113,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
             localeCode: locale?.code,
             disallowPast,
             disallowFuture,
+            required,
         })
         if (isErrorNow) return
 
