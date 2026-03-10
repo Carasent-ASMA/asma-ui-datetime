@@ -6,6 +6,7 @@ import { buildDisabled, isDisabledDate } from '../helpers'
 const msgs = {
     en: {
         required: 'Required',
+        minDate: 'End date must be after the start date',
         invalidDay: 'Invalid day',
         invalidMonth: 'Invalid month',
         invalidYear: 'Invalid year. Year must be between 1900-2100',
@@ -17,6 +18,7 @@ const msgs = {
     },
     nb: {
         required: 'Påkrevd',
+        minDate: 'Sluttdato må være etter startdato',
         invalidDay: 'Ugyldig dag',
         invalidMonth: 'Ugyldig måned',
         invalidYear: 'Ugyldig år. År må være mellom 1900 og 2100',
@@ -31,8 +33,12 @@ const msgs = {
 const formatRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/
 export const useDatePickerValidation = () => {
     const [validationError, setError] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     const [errHelperText, setErrHelperText] = useState('')
+
+    const clearValidation = useCallback(() => {
+        setError(false)
+        setErrHelperText('')
+    }, [])
 
     const handleValidation = useCallback(
         ({
@@ -42,6 +48,7 @@ export const useDatePickerValidation = () => {
             disallowPast,
             disallowFuture,
             required,
+            minDate,
         }: {
             value: string
             disabledDays?: Matcher | Matcher[]
@@ -49,6 +56,7 @@ export const useDatePickerValidation = () => {
             disallowPast?: boolean
             disallowFuture?: boolean
             required?: boolean
+            minDate?: Date
         }): boolean => {
             const lang = localeCode === 'nb' ? 'nb' : 'en'
             const digits = value.replace(/\D/g, '')
@@ -57,7 +65,6 @@ export const useDatePickerValidation = () => {
             if (!digits.length) {
                 setError(!!required)
                 setErrHelperText(required ? msgs[lang].required : '')
-                setDisabled(false)
                 return !!required
             }
 
@@ -66,7 +73,6 @@ export const useDatePickerValidation = () => {
             if (!m) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidFormat)
-                setDisabled(false)
                 return true
             }
 
@@ -78,7 +84,6 @@ export const useDatePickerValidation = () => {
             if (dd < 1 || dd > 31) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidDay)
-                setDisabled(false)
                 return true
             }
 
@@ -86,7 +91,6 @@ export const useDatePickerValidation = () => {
             if (mm < 1 || mm > 12) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidMonth)
-                setDisabled(false)
                 return true
             }
 
@@ -94,7 +98,6 @@ export const useDatePickerValidation = () => {
             if (yyyy < 1900 || yyyy > 2100) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidYear)
-                setDisabled(false)
                 return true
             }
 
@@ -104,7 +107,6 @@ export const useDatePickerValidation = () => {
             if (!calendarOk) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidDate)
-                setDisabled(false)
                 return true
             }
 
@@ -113,7 +115,12 @@ export const useDatePickerValidation = () => {
             if (!isValidDateFns(parsed)) {
                 setError(true)
                 setErrHelperText(msgs[lang].invalidDate)
-                setDisabled(false)
+                return true
+            }
+
+            if (minDate && startOfDay(parsed) <= startOfDay(minDate)) {
+                setError(true)
+                setErrHelperText(msgs[lang].minDate)
                 return true
             }
 
@@ -121,7 +128,6 @@ export const useDatePickerValidation = () => {
             const mergedDisabled = buildDisabled(disabledDays, disallowPast, disallowFuture)
             if (mergedDisabled.length) {
                 const policyHit = isDisabledDate({ parsedDate: parsed, disabledDays: mergedDisabled })
-                setDisabled(policyHit)
                 if (policyHit) {
                     setErrHelperText(msgs[lang].dateDisabled)
                     setError(true)
@@ -129,12 +135,10 @@ export const useDatePickerValidation = () => {
                 }
             }
 
-            setError(false)
-            setErrHelperText('')
-            setDisabled(false)
+            clearValidation()
             return false
         },
-        [],
+        [clearValidation],
     )
-    return { validationError, handleValidation, setError, disabled, setDisabled, errHelperText, setErrHelperText }
+    return { validationError, handleValidation, errHelperText, clearValidation }
 }

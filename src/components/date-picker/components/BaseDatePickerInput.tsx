@@ -33,6 +33,7 @@ export type IBaseDatePickerInput = {
     disallowFuture?: boolean
     hideDefaultHelperText?: boolean
     required?: boolean
+    minDate?: Date
 }
 
 export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
@@ -57,10 +58,11 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
         onValidatedOnce,
         hideDefaultHelperText,
         required,
+        minDate,
         ...rest
     } = props
 
-    const { validationError, handleValidation, errHelperText } = useDatePickerValidation()
+    const { validationError, handleValidation, errHelperText, clearValidation } = useDatePickerValidation()
     const { maskRef } = useDatePickerMask()
     const [value, setValue] = useState(selected ? getValue(selected, dateFormat) : '')
 
@@ -72,7 +74,35 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
 
     useEffect(() => {
         setValue(selected ? getValue(selected, dateFormat) : '')
-    }, [selected])
+    }, [selected, dateFormat])
+
+    useEffect(() => {
+        if (!selected) {
+            clearValidation()
+            return
+        }
+
+        handleValidation({
+            value: getValue(selected, dateFormat),
+            disabledDays,
+            localeCode: locale?.code,
+            disallowPast,
+            disallowFuture,
+            required,
+            minDate,
+        })
+    }, [
+        selected,
+        dateFormat,
+        disabledDays,
+        locale?.code,
+        disallowPast,
+        disallowFuture,
+        required,
+        minDate,
+        handleValidation,
+        clearValidation,
+    ])
 
     const digits = value.replace(/\D/g, '')
     const hasDigits = digits.length > 0
@@ -92,6 +122,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
             disallowPast,
             disallowFuture,
             required,
+            minDate,
         })
         onValidatedOnce?.()
     }, [
@@ -102,6 +133,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
         disallowPast,
         disallowFuture,
         required,
+        minDate,
         onValidatedOnce,
         handleValidation,
     ])
@@ -114,6 +146,7 @@ export const BaseDatePickerInput: React.FC<IBaseDatePickerInput> = (props) => {
             disallowPast,
             disallowFuture,
             required,
+            minDate,
         })
         if (isErrorNow) return
 

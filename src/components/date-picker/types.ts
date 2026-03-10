@@ -22,6 +22,7 @@ export type DatePickerSingleFieldProps = {
     error?: boolean
     errorText?: React.ReactNode
     required?: boolean
+    minDate?: Date
     placeholder?: string
     onInputChange?: (date: Date | undefined) => void
     disallowPast?: boolean

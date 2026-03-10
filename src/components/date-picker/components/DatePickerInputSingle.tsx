@@ -21,6 +21,7 @@ export const DatePickerInputSingle: React.FC<{
         disallowFuture,
         disallowPast,
         required,
+        minDate,
         validateOnCalendarClose,
         onValidatedOnce,
         onInputChange,
@@ -49,6 +50,7 @@ export const DatePickerInputSingle: React.FC<{
             disallowFuture={disallowFuture}
             disallowPast={disallowPast}
             required={required}
+            minDate={minDate}
             validateOnCalendarClose={validateOnCalendarClose}
             onValidatedOnce={onValidatedOnce}
             title={title}
