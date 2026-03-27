@@ -127,6 +127,7 @@ export const StyledDayPicker: React.FC<{
                     isNb={isNb}
                     selected={datePickerProps.selected}
                     removeSelection={removeSelection}
+                    required={datePickerProps?.required}
                     setMonth={setMonth}
                     month={month}
                     onClear={onClear}

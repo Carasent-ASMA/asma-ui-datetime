@@ -13,6 +13,7 @@ type CommonDatePickerProps = {
     onClear?: () => void
     validateOnCalendarClose?: boolean
     onValidatedOnce?: () => void
+    required?: boolean
 } & CalendarProps
 
 export type DatePickerSingleFieldProps = {
@@ -21,7 +22,6 @@ export type DatePickerSingleFieldProps = {
     helperText?: React.ReactNode
     error?: boolean
     errorText?: React.ReactNode
-    required?: boolean
     minDate?: Date
     placeholder?: string
     onInputChange?: (date: Date | undefined) => void

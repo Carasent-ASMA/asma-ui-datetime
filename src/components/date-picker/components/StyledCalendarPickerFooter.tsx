@@ -1,5 +1,5 @@
 import { useNavigation, type Matcher } from 'react-day-picker'
-import { isDate } from 'date-fns'
+import { isDate, isValid } from 'date-fns'
 import type { Dispatch, SetStateAction } from 'react'
 import { compact, isArray, isObject } from 'lodash-es'
 
@@ -13,18 +13,17 @@ export const StyledCalendarPickerFooter: React.FC<{
     selected: Matcher | Matcher[] | undefined
     removeSelection: (e: React.MouseEvent) => void
     onClear: (() => void) | undefined
+    required?: boolean
     month: Date | undefined
     setMonth: Dispatch<SetStateAction<Date | undefined>>
-}> = ({ onClose, isNb, selected, removeSelection, setMonth, onClear }) => {
+}> = ({ onClose, isNb, selected, removeSelection, setMonth, onClear, required }) => {
     const { nextMonth, previousMonth } = useNavigation()
-
-    const eraserDisabled = isArray(selected)
-        ? !selected.length
-        : isDate(selected)
-        ? !selected
-        : isObject(selected)
-        ? !compact(Object.values(selected)).length
-        : true
+    const eraserDisabled =
+        !!required ||
+        selected === null ||
+        (isArray(selected) && selected.length === 0) ||
+        (isDate(selected) && !isValid(selected)) ||
+        (isObject(selected) && !compact(Object.values(selected)).length)
 
     return (
         <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'space-between' }}>
