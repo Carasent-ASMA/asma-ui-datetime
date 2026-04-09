@@ -1,5 +1,4 @@
-import { Tooltip, type TooltipProps } from '@mui/material'
-import Fade from '@mui/material/Fade'
+import { Fade, Tooltip, type TooltipProps } from '@mui/material'
 
 export const StyledTooltip = (props: TooltipProps) => {
     const { componentsProps, ...rest } = props

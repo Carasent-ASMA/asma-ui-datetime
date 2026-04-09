@@ -4,8 +4,8 @@ import { useDatePickerMask } from '../hooks/useDatePickerMask'
 import { useEffect, useState } from 'react'
 import { getValue } from '../helpers'
 import { useDatePickerValidation } from '../hooks/useDatePickerValidation'
-import { parse, isValid as isValidDateFns, type Locale } from 'date-fns'
-import type { Matcher } from 'react-day-picker'
+import { parse, isValid as isValidDateFns } from 'date-fns'
+import type { DayPickerProps as ReactDayPickerProps, Matcher } from 'react-day-picker'
 import { cn } from 'src/helpers/cn'
 import { HelperTextWithTooltip } from './HelperTextWithTooltip'
 
@@ -18,7 +18,7 @@ export type IBaseDatePickerInput = {
     selected: Date | undefined
     dateFormat?: string
     hideCalendar?: boolean
-    locale?: Locale
+    locale?: ReactDayPickerProps['locale']
     disabledDays?: Matcher | Matcher[]
     validateOnCalendarClose?: boolean
     onValidatedOnce?: () => void

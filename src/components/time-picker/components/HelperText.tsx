@@ -23,9 +23,9 @@ export const HelperText: React.FC<{
 
     return (
         <span className='flex items-start gap-1'>
-            <div className={cn('flex', 'transform-gpu transition-all duration-300 ease-in-out')}>
+            <span className={cn('flex', 'transform-gpu transition-all duration-300 ease-in-out')}>
                 {hasError && <OutlineErrorRounded width={20} height={20} color='var(--colors-error-500)' />}
-            </div>
+            </span>
 
             <span
                 className='flex-1 text-left leading-4 break-words pt-[2px]'

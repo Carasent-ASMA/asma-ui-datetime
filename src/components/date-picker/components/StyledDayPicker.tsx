@@ -1,4 +1,10 @@
-import { DayPicker, type CaptionProps, type DropdownProps, type ActiveModifiers } from 'react-day-picker'
+import {
+    DayPicker,
+    type DateRange,
+    type Modifiers,
+    type MonthCaptionProps,
+    type OnSelectHandler,
+} from 'react-day-picker'
 import type { DatePickerProps } from '../types'
 import { type PopoverProps } from '@mui/material'
 import { useState } from 'react'
@@ -39,8 +45,19 @@ export const StyledDayPicker: React.FC<{
     const today = startOfToday()
     const disabledMerged = buildDisabled(disabledDays, disallowPast, disallowFuture, today)
 
-    const removeSelection = (e: React.MouseEvent) =>
-        datePickerProps.selected && datePickerProps?.onSelect?.(undefined, new Date(), {}, e)
+    const removeSelection = (e: React.MouseEvent) => {
+        if (!datePickerProps.selected || !datePickerProps.onSelect) return
+
+        const triggerDate = new Date()
+        const modifiers = {} as Modifiers
+
+        if (datePickerProps.mode === 'range') {
+            ;(datePickerProps.onSelect as OnSelectHandler<DateRange | undefined>)(undefined, triggerDate, modifiers, e)
+            return
+        }
+
+        ;(datePickerProps.onSelect as OnSelectHandler<Date | undefined>)(undefined, triggerDate, modifiers, e)
+    }
 
     const handleMonthChange = (nextMonth: Date) => {
         setMonth(nextMonth)
@@ -64,7 +81,7 @@ export const StyledDayPicker: React.FC<{
                 datePickerProps.onSelect(
                     newSelectedDate,
                     newSelectedDate,
-                    {} as ActiveModifiers,
+                    {} as Modifiers,
                     {} as React.MouseEvent<Element, MouseEvent>,
                 )
             }
@@ -80,8 +97,8 @@ export const StyledDayPicker: React.FC<{
             captionLayout='dropdown'
             weekStartsOn={1}
             locale={locale}
-            fromYear={datePickerProps.fromYear || 1900}
-            toYear={datePickerProps.toYear || 2100}
+            startMonth={new Date(datePickerProps.fromYear || 1900, 0)}
+            endMonth={new Date(datePickerProps.toYear || 2100, 11)}
             data-test='calendar-picker'
             showWeekNumber
             showOutsideDays={showOutsideDays}
@@ -111,15 +128,9 @@ export const StyledDayPicker: React.FC<{
                 caption_end: isOneMonthView ? '' : styles['caption_end'],
             }}
             components={{
-                Caption: (props: CaptionProps) => (
-                    <CustomCaption {...props} setMonth={setMonth} month={month} isNb={isNb} onClose={onClose} />
-                ),
-                Dropdown: (props: DropdownProps) =>
-                    props.name === 'months' ? (
-                        <StyledCalendarPickerSelectMonth {...props} />
-                    ) : (
-                        <StyledCalendarPickerSelectYear {...props} />
-                    ),
+                MonthCaption: (props: MonthCaptionProps) => <CustomCaption {...props} onClose={onClose} />,
+                MonthsDropdown: StyledCalendarPickerSelectMonth,
+                YearsDropdown: StyledCalendarPickerSelectYear,
             }}
             footer={
                 <StyledCalendarPickerFooter
