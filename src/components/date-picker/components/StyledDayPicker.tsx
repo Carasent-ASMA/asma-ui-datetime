@@ -27,9 +27,10 @@ export const StyledDayPicker: React.FC<{
         numberOfMonths,
         disabledDays,
         onClear,
-        title, // consume it here if you remove calendar picker will have tooltip with this title
+        title: _title, // consume it here if you remove calendar picker will have tooltip with this title
         ...dayPickerPropsRest
     } = datePickerProps
+    void _title
 
     const { onClose } = popoverProps
 
@@ -52,11 +53,13 @@ export const StyledDayPicker: React.FC<{
         const modifiers = {} as Modifiers
 
         if (datePickerProps.mode === 'range') {
-            ;(datePickerProps.onSelect as OnSelectHandler<DateRange | undefined>)(undefined, triggerDate, modifiers, e)
+            const onSelectRange = datePickerProps.onSelect as OnSelectHandler<DateRange | undefined>
+            onSelectRange(undefined, triggerDate, modifiers, e)
             return
         }
 
-        ;(datePickerProps.onSelect as OnSelectHandler<Date | undefined>)(undefined, triggerDate, modifiers, e)
+        const onSelectSingle = datePickerProps.onSelect as OnSelectHandler<Date | undefined>
+        onSelectSingle(undefined, triggerDate, modifiers, e)
     }
 
     const handleMonthChange = (nextMonth: Date) => {
@@ -95,6 +98,7 @@ export const StyledDayPicker: React.FC<{
             month={month}
             onMonthChange={handleMonthChange}
             captionLayout='dropdown'
+            hideNavigation
             weekStartsOn={1}
             locale={locale}
             startMonth={new Date(datePickerProps.fromYear || 1900, 0)}
@@ -103,9 +107,28 @@ export const StyledDayPicker: React.FC<{
             showWeekNumber
             showOutsideDays={showOutsideDays}
             fixedWeeks
-            className={`${styles['styled-calendar-day-picker']} ${isNb ? styles['locale-nb'] : ''}`}
+            formatters={{
+                formatWeekNumberHeader: () => (isNb ? 'U' : 'W'),
+            }}
+            className={styles['styled-calendar-day-picker']}
             classNames={{
                 months: styles['months'],
+                month_caption: styles['caption'],
+                weekdays: styles['head_row'],
+                weekday: styles['head_cell'],
+                week: styles['row'],
+                day: styles['cell'],
+                day_button: styles['day'],
+                week_number: styles['weeknumber'],
+                week_number_header: styles['weeknumber-header'],
+                selected: styles['day_selected'],
+                today: styles['day_today'],
+                outside: styles['day_outside'],
+                disabled: styles['day_disabled'],
+                range_middle: styles['day_range_middle'],
+                hidden: styles['day_hidden'],
+                button_previous: styles['nav_button_previous'],
+                button_next: styles['nav_button_next'],
                 weeknumber: styles['weeknumber'],
                 month: styles['month'],
                 caption: styles['caption'],
@@ -118,7 +141,6 @@ export const StyledDayPicker: React.FC<{
                 head_cell: styles['head_cell'],
                 row: styles['row'],
                 cell: styles['cell'],
-                day: styles['day'],
                 day_today: styles['day_today'],
                 day_selected: styles['day_selected'],
                 day_outside: styles['day_outside'],
