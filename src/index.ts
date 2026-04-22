@@ -1,3 +1,5 @@
+import 'react-day-picker/style.css'
+
 export * from './components/date-picker'
 export * from './components/time-picker'
 

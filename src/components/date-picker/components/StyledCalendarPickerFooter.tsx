@@ -18,12 +18,16 @@ export const StyledCalendarPickerFooter: React.FC<{
     setMonth: Dispatch<SetStateAction<Date | undefined>>
 }> = ({ onClose, isNb, selected, removeSelection, setMonth, onClear, required }) => {
     const { nextMonth, previousMonth } = useNavigation()
-    const eraserDisabled =
-        !!required ||
-        selected === null ||
-        (isArray(selected) && selected.length === 0) ||
-        (isDate(selected) && !isValid(selected)) ||
-        (isObject(selected) && !compact(Object.values(selected)).length)
+    const hasSelection = (() => {
+        if (selected == null) return false
+        if (isArray(selected)) return selected.length > 0
+        if (isDate(selected)) return isValid(selected)
+        if (isObject(selected)) return compact(Object.values(selected)).length > 0
+
+        return true
+    })()
+
+    const eraserDisabled = !!required || !hasSelection
 
     return (
         <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'space-between' }}>
